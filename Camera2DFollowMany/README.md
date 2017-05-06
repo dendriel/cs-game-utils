@@ -1,7 +1,8 @@
-+---------------------------+
+Camera 2D Follow Many
+
+Files:
 + Camera2DFollowMany.cs
 + CameraFollowElement.cs
-+---------------------------+
 
 Camera 2D Follow Many will follow any CameraFollowElement (component).
 If there is multiple GOs to follow, the camera will expand accordingly to the configured parameters.
