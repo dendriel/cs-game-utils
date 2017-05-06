@@ -1,4 +1,22 @@
-﻿using UnityEngine;
+﻿/**
+ * Copyright © 2017 Vitor Rozsa, vitor.rozsa@hotmail.com
+ * 
+ *	This file is part of Camera 2D Follow Many.
+ *
+ *	Camera 2D Follow Many is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
+ *
+ *	Camera 2D Follow Many is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with Camera 2D Follow Many. If not, see<http://www.gnu.org/licenses/>.
+ */
+using UnityEngine;
 using System.Collections.Generic;
 
 
@@ -18,20 +36,19 @@ public class Camera2DFollowMany : MonoBehaviour
 	public float VerticalOffset = 0f;
 	[Tooltip("Add a horizontal offset for the camera")]
 	public float HorizontalOffset = 0f;
-
-	[Tooltip("Maximum expanded size of the camera.")]
-	public float MaximumCameraSize = 10f;
-
+	
 	[Tooltip("Expand the camera horizontally")]
 	public bool ExpandCameraX = true;
 	public float MinDistanceXToExpand = 10f;
 
 	[Tooltip("Expand the camera vertically")]
 	public bool ExpandCameraY = true;
-	public float MinistanceYToExpand = 6f;
-	
+	public float MinDistanceYToExpand = 6f;
 
-    [Header("The camera won't go further these bounds")]
+	[Tooltip("Maximum expanded size of the camera. Set it to 0 for no limits.")]
+	public float MaximumCameraSize = 10f;
+
+	[Header("The camera won't go further these bounds")]
     public Transform TopLimit;
     public Transform BottomLimit;
     public Transform LeftLimit;
@@ -136,7 +153,7 @@ public class Camera2DFollowMany : MonoBehaviour
 		}
 		
 		if (ExpandCameraY) {
-			expandRate += Mathf.Max (0, (distance.y - MinistanceYToExpand)) / 2;
+			expandRate += Mathf.Max (0, (distance.y - MinDistanceYToExpand)) / 2;
 		}
 		
 		// Update camera size.
