@@ -1,2 +1,2 @@
 # cs-game-utils
-Funciionalities for game development in CS.
+Funcotionalities for game development in CS.
