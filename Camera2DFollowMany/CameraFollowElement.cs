@@ -18,6 +18,9 @@
  */
 using UnityEngine;
 
+
+namespace CSGameUtils {
+
 /// <summary>
 /// Add this component to any GO that must be follow by the camera.
 /// 
@@ -39,3 +42,4 @@ public class CameraFollowElement : MonoBehaviour
 		cameraFollow.RemovePlayer(this.gameObject);
 	}
 }
+} // namespace CSGameUtils

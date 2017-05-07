@@ -18,6 +18,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
+namespace CSGameUtils {
 /// <summary>
 /// Handles cooldown data. This is an independent timer that uses "WaitForSeconds" for creating a cooldown.
 ///
@@ -155,3 +156,4 @@ public class Cooldown
         HasEnded = true;
     }
 }
+} // namespace CSGameUtils

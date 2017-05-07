@@ -16,6 +16,8 @@
  *	You should have received a copy of the GNU General Public License
  *	along with Player Controller Interface. If not, see<http://www.gnu.org/licenses/>.
  */
+ 
+namespace CSGameUtils {
 
 /// <summary>
 /// Interface for player controllers.
@@ -54,3 +56,4 @@ public interface IPlayerController
 	bool ActionDown();
 	bool ActionPressed();
 }
+} // namespace CSGameUtils

@@ -18,6 +18,9 @@
  */
 using System;
 
+
+namespace CSGameUtils {
+
 public class USBAndKeyboardController : IPlayerController
 {
 	USBController usbCtrl;
@@ -161,3 +164,4 @@ public class USBAndKeyboardController : IPlayerController
 		return JumpPressed() || StartPressed();
 	}
 }
+} // namespace CSGameUtils

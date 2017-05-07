@@ -19,6 +19,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+namespace CSGameUtils {
 
 /// <summary>
 /// Camera 2D Follow Many will follow any CameraFollowElement (component).
@@ -217,3 +218,4 @@ public class Camera2DFollowMany : MonoBehaviour
 		return y;
 	}
 }
+} // namespace CSGameUtils

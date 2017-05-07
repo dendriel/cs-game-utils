@@ -18,6 +18,9 @@
  */
 using UnityEngine;
 
+
+namespace CSGameUtils {
+
 public class KeyboardController : IPlayerController
 {
 	KeyCode StartKey = KeyCode.Return;
@@ -161,3 +164,4 @@ public class KeyboardController : IPlayerController
 		return JumpPressed() || StartPressed();
     }
 }
+} // namespace CSGameUtils

@@ -19,6 +19,9 @@
 using UnityEngine;
 using System;
 
+
+namespace CSGameUtils {
+
 /// <summary>
 /// Create an USB Controller.
 /// 
@@ -85,7 +88,7 @@ public class USBController : IPlayerController
 		dodgeButton       = buttonNamePrefix + idStr + "Fire2";
 		jumpButton        = buttonNamePrefix + idStr + "Fire3";
 		// To use a "block button" it's necessary to create this input ("Edit->Settings->Input").
-		blockButton       = buttonNamePrefix + idStr + "Block";
+		//blockButton       = buttonNamePrefix + idStr + "Block";
 	}
 
 	/// <summary>
@@ -242,3 +245,4 @@ public class USBController : IPlayerController
 		return JumpPressed() || StartPressed();
 	}
 }
+} // namespace CSGameUtils

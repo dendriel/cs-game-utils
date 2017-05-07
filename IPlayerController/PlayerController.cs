@@ -18,6 +18,8 @@
  */
 using UnityEngine;
 
+namespace CSGameUtils {
+
 /// <summary>
 /// Provides functionality to control an entity (character, interface, etc).
 /// </summary>
@@ -106,3 +108,4 @@ public class PlayerController : MonoBehaviour
 		}
     }
 }
+} // namespace CSGameUtils

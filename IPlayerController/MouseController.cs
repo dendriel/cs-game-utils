@@ -18,6 +18,9 @@
  */
 using UnityEngine;
 
+
+namespace CSGameUtils {
+
 /// <summary>
 /// The mouse controller is meant to be used with other controllers.
 /// </summary>
@@ -100,3 +103,4 @@ public class MouseController : IPlayerController
         return Input.GetMouseButtonDown(ActionKey);
     }
 }
+} // namespace CSGameUtils
