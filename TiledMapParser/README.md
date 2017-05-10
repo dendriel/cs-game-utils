@@ -3,7 +3,7 @@ Tiled Map Parser
 Files:
 + TiledMapParser.cs
 + TiledMapParserExample.cs
-+ TestingJSON.cs
++ TestingJSON.json
 
 TiledMapParser aims to provide facilities for parsing JSONs maps generated from Tiled Map Editor.
 
