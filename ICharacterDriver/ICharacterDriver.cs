@@ -65,5 +65,20 @@ namespace CSGameUtils
 		/// Makes the character run down.
 		/// </summary>
 		void RunDown();
+
+		/// <summary>
+		/// Makes the character jump.
+		/// </summary>
+		void Jump();
+
+		/// <summary>
+		/// Performs the Attack A.
+		/// </summary>
+		void AttackA();
+
+		/// <summary>
+		/// Performs the Attack B.
+		/// </summary>
+		void AttackB();
 	}
 } // namespace CSGameUtils
