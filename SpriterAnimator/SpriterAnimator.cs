@@ -32,13 +32,13 @@ namespace CSGameUtils
 	/// Unity Animator or Spriter Animator. This allows the character driver to use one or
 	/// another.
 	/// 
-	/// We could had created a interface to create a IUnityAnimator and ISpriterAnimator and
+	/// We could had created an interface to create a IUnityAnimator and ISpriterAnimator and
 	/// create a generic variable here, but i believe that will be harder to use.
 	/// </summary>
 	public class SpriterAnimator
 	{
 		/// <summary>
-		/// Unity animator. The
+		/// Unity animator.
 		/// </summary>
 		Animator unityAnimator;
 
