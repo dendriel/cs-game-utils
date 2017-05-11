@@ -4,7 +4,7 @@ Files:
 + SpriterAnimator.cs
 + UnityAnimator.cs
 
-This is a feature that mimics the Unity animator for Spriter animations.
+This feature mimics the Unity animator for Spriter animations.
 
 The need for this feature arose when I was migrating unity animations with spritesheets to Spriter animations with bones. Spriter exports a whole prefab and provides some methods to control and trigger the animations. Its interface is different from Unity's and lack many features from Animator.
 
@@ -19,6 +19,8 @@ I believe if you are looking for a feature like SpriterAnimator it's because you
 *By the way, when using animations from Spriter in SpriterAnimator it's necessary to call its "Update" method every frame in order to handle automatic transitions from states.
 
 While setting up the SpriterAnimator (with animations from Spriter), you "just" need to create the states and transitions. I will leave here the code used to setup the SpriterAnimator from the main character in Deceased Land.
+
+*Obs.: may lack some features because I just created what was necessary in order to run Deceased Land.
 
 Legend:
 
@@ -60,6 +62,10 @@ You may want to draw the FSM to get a better view of it. =]
     protected const int groundLayerIdx = 0;
     protected const int attachedLayerIdx = 1;
 	
+    /// <summary>
+    /// Character's animator.
+    /// </summary>
+    protected SpriterAnimator anim;
 
     protected override void SetupSpriterAnimator()
     {
@@ -147,8 +153,8 @@ You may want to draw the FSM to get a better view of it. =]
         // frame stay a while longer).
         anim.SpriterAnimatorSetupAutomaticTransition(workingLayer, jumpStateTag, landStateTag);        
         // ANYSTATE => FALL
-        anim.SpriterAnimatorSetupStateBool(workingLayer, GenericAnimator.AnyStateLabel, fallBool, true, fallStateTag);
-        // FALL -> LAND
+        anim.SpriterAnimatorSetupStateBool(workingLayer, SpriterAnimator.AnyStateLabel, fallBool, true, fallStateTag);
+        // FALL => LAND
         anim.SpriterAnimatorSetupStateBool(workingLayer, fallStateTag, fallBool, false, landStateTag);
         // LAND (> IDLE)
         anim.SpriterAnimatorSetupAutomaticTransition(workingLayer, landStateTag, idleStateTag);
