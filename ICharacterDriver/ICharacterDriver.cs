@@ -67,6 +67,12 @@ namespace CSGameUtils
 		void RunDown();
 
 		/// <summary>
+		/// Most useful to force a transition to idle. (walk = false).
+		/// </summary>
+		/// <param name="zeroVelocity">Set velocity to zero.</param>
+		void StopMoving(bool zeroVelocity = false);
+
+		/// <summary>
 		/// Makes the character jump.
 		/// </summary>
 		void Jump();
@@ -80,5 +86,17 @@ namespace CSGameUtils
 		/// Performs the Attack B.
 		/// </summary>
 		void AttackB();
+
+		/// <summary>
+		/// The character is facing to the right?
+		/// </summary>
+		bool IsFacingRight();
+
+		/// <summary>
+		/// Take a hit.
+		/// </summary>
+		/// <param name="hitProperty">Properties of the hit.</param>
+		/// <returns>true if the character acknoledged the (and was) hit. false otherwise.</returns>
+		bool TakeHit<T>(T hitProperty);
 	}
 } // namespace CSGameUtils

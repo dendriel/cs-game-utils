@@ -205,24 +205,24 @@ namespace CSGameUtils
 		protected const string hurtTrigger = "Hurt";
 		protected const string fallBool = "Fall";
 		// States.
-		protected const string idleStateTag = "Idle";
-		protected const string walkStartStateTag = walkStateTag + "Start";
-		protected const string walkStateTag = "Walk";
-		protected const string walkEndStateTag = walkStateTag + "End";
-		protected const string runStartStateTag = runStateTag + "Start";
-		protected const string runStateTag = "Run";
-		protected const string runEndStateTag = runStateTag + "End";
-		protected const string attackStateTag = "Attack";
-		protected const string jumpStateTag = "Jump";
-		protected const string fallStateTag = "Fall";
-		protected const string landStateTag = "Land";
-		protected const string hurtStateTag = "Hurt";
-		protected const string idleAttachStartStateTag = "IdleAttachStart";
-		protected const string idleAttachStateTag = "IdleAttach";
-		protected const string idleAttachEndStateTag = "IdleAttachEnd";
-		protected const string walkAttachStartStateTag = "WalkAttachStart";    
-		protected const string walkAttachStateTag = "WalkAttach";
-		protected const string walkAttachEndStateTag = "WalkAttachEnd";
+		protected string idleStateTag = "Idle";
+		protected string walkStartStateTag = "WalkStart";
+		protected string walkStateTag = "Walk";
+		protected string walkEndStateTag = "WalkEnd";
+		protected string runStartStateTag = "RunStart";
+		protected string runStateTag = "Run";
+		protected string runEndStateTag = "RunEnd";
+		protected string attackStateTag = "Attack";
+		protected string jumpStateTag = "Jump";
+		protected string fallStateTag = "Fall";
+		protected string landStateTag = "Land";
+		protected string hurtStateTag = "Hurt";
+		protected string idleAttachStartStateTag = "IdleAttachStart";
+		protected string idleAttachStateTag = "IdleAttach";
+		protected string idleAttachEndStateTag = "IdleAttachEnd";
+		protected string walkAttachStartStateTag = "WalkAttachStart";    
+		protected string walkAttachStateTag = "WalkAttach";
+		protected string walkAttachEndStateTag = "WalkAttachEnd";
 		// Layers.
 		protected const int groundLayerIdx = 0;
 
@@ -392,7 +392,7 @@ namespace CSGameUtils
 
 		public virtual void Move(Vector2 dir, Vector2 speed)
 		{
-			if (IsLanding() || IsAttacking() || IsBeingHurt() || IsDead()) return;
+			if (!CanMove()) return;
 
 			bool grounded = IsGrounded();
         
@@ -422,6 +422,15 @@ namespace CSGameUtils
 
 			anim.SetBool(walkBool, grounded);
 			DisableFriction();
+		}
+
+		/// <summary>
+		/// Check if the character can move.
+		/// </summary>
+		/// <returns>true if can move; false otherwise</returns>
+		public virtual bool CanMove()
+		{
+			return !(IsLanding() || IsAttacking() || IsBeingHurt() || IsDead());
 		}
 
 		/// <summary>
@@ -495,12 +504,14 @@ namespace CSGameUtils
 		/// <summary>
 		/// Display the hurt animation from the character.
 		/// </summary>
-		public virtual void TakeHit()
+		public virtual bool TakeHit<T>(T hitProperty)
 		{
-			if (IsBeingHurt() || IsDead()) return;
+			if (IsBeingHurt() || IsDead()) return false;
 
 			anim.SetTrigger(hurtTrigger);
 			//EnableFriction();
+
+			return true;
 		}
 
 		/// <summary>
@@ -607,6 +618,15 @@ namespace CSGameUtils
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// The character is facing to the right?
+		/// </summary>
+		/// <returns></returns>
+		public bool IsFacingRight()
+		{
+			return FacingRight;
 		}
 
 		/// <summary>
