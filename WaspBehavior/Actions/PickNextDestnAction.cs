@@ -40,11 +40,6 @@ namespace CSGameUtils
 		Func<int> GetCurrDestnIdx;
 
 		/// <summary>
-		/// The current destination.
-		/// </summary>
-		Action<T> SetDesntFunc;
-
-		/// <summary>
 		/// If loop flag is false, the counter will decrease instead of being reset to zero when it reachs the limit.
 		/// </summary>
 		bool loop;
@@ -57,27 +52,20 @@ namespace CSGameUtils
 		/// <summary>
 		/// Create a new PickNextDestnAction.
 		/// </summary>
-		/// <param name="_GetDestnPoints">A Function to retrieve a update list with the points to be visited.</param>
-		/// <param name="startingPointToPatrolIdx">The first patrolling point.</param>
+		/// <param name="_GetDestnPoints">A Function to retrieve a updated list with the points to be visited.</param>
 		/// <param name="_GetCurrDestnIdx">A method to get the current destination index.</param>
 		/// /// <param name="_SetCurrDestnIdx">A method to set the current destination index.</param>
-		/// <param name="_SetDesntFunc">A method to define the next destination to visit.</param>
 		/// <param param name="_loop">true: reset the index when it reaches the limit; false: start counting back when the index reaches the limit.</param>
 		/// <param name="_step">Index increment step.</param>
-		public PickNextDestnAction(Func<T[]> _GetDestnPoints, Func<int> _GetCurrDestnIdx, Action<int> _SetCurrDestnIdx, Action<T> _SetDesntFunc, bool _loop = true, int _step = 1)
+		public PickNextDestnAction(Func<T[]> _GetDestnPoints, Func<int> _GetCurrDestnIdx, Action<int> _SetCurrDestnIdx, bool _loop = true, int _step = 1)
 		{
 			GetDestnPoints = _GetDestnPoints;
 			GetCurrDestnIdx = _GetCurrDestnIdx;
 			SetCurrDestnIdx = _SetCurrDestnIdx;
-			SetDesntFunc = _SetDesntFunc;
 			loop = _loop;
 			step = _step;
 
 			_Action = PickNextDestnExec;
-
-			// Perform first setup.
-			T[] destnPoints = GetDestnPoints();
-			SetDesntFunc(destnPoints[GetCurrDestnIdx()]);
 		}
 
 		BehaviorReturnCode PickNextDestnExec()
@@ -104,8 +92,6 @@ namespace CSGameUtils
 
 			// Set next destn point.
 			SetCurrDestnIdx(currDestnPointIdx);
-			SetDesntFunc(destnPoints[currDestnPointIdx]);
-			//Debug.Log("SetDestn (" + currDestnPointIdx + "): " + (destnPoints[currDestnPointIdx] as Transform).position);
 
 			return BehaviorReturnCode.Success;
 		}

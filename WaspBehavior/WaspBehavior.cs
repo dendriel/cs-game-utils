@@ -33,6 +33,8 @@ namespace CSGameUtils
 	/// Wasp behavior aims to easy the development of game agents (or AIs). Basically, you must extend this class
 	/// and implement the "BuildBehavior" method. In there, you will setup you behavior tree and set it inside the
 	/// "behavior" parameter "behavior = new Behavior(BehaviorComponent).
+	/// 
+	/// Check the "Behaviors" folder for examples.
 	/// </summary>
 	public abstract class WaspBehavior: MonoBehaviour
 	{

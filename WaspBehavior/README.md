@@ -12,9 +12,10 @@ Files:
  The attached version of Behavior Library was modified by me at some points.
  ```
  
-Wasp behavior aims to easy the development of game agents (or AIs).
+Wasp behavior aims to ease the development of game agents (or AIs).
 
 - Basically, you must extend this class (WaspBehavior) and implement the "BuildBehavior" method. In there, you will setup you behavior tree and set it inside the "behavior" parameter "behavior = new Behavior(BehaviorComponent).
+- Check "Behaviors" folder for examples.
 
 WaspBehaviorEvent is like an action you setup in you BT but it will trigger an action once, test for some condition in every update and return sucess only when the condition is satisfied.
 
