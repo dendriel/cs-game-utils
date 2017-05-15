@@ -17,8 +17,21 @@
  *	along with Character Driver. If not, see<http://www.gnu.org/licenses/>.
  */
 
+using UnityEngine;
+
 namespace CSGameUtils
 {
+	/// <summary>
+	/// Points that define the character bounds. Useful for raycasting.
+	/// </summary>
+	public struct RaycastOrigins
+	{
+		public Vector2 topLeft, topRight;
+		public Vector2 bottomLeft, bottomRight;
+		public Vector2 leftCenter, rightCenter;
+		public Vector2 bottomCenter, topCenter;
+	}
+
 	/// <summary>
 	/// This an interface for character drivers. It's useful when using Wasp Behavior engine. Many actions of
 	/// this engine receives a CharacterDriver as parameter. So, in order to allow us to use the behavior engine
@@ -98,5 +111,77 @@ namespace CSGameUtils
 		/// <param name="hitProperty">Properties of the hit.</param>
 		/// <returns>true if the character acknoledged the (and was) hit. false otherwise.</returns>
 		bool TakeHit<T>(T hitProperty);
+
+		/// <summary>
+		/// Get the characters position.
+		/// </summary>
+		/// <returns>transform.position</returns>
+		Vector3 GetPosition();
+
+		/// <summary>
+		/// Get a MonoBehavior from the character. Useful for starting coroutines in AI behaviors.
+		/// </summary>
+		/// <returns>A MonoBehavior reference.</returns>
+		MonoBehaviour GetMonoBehavior();
+
+		/// <summary>
+		/// Get the character's raycast origins.
+		/// </summary>
+		/// <returns>The updated raycast origins from the character.</returns>
+		RaycastOrigins GetRaycastOrigins();
+
+		/// <summary>
+		/// Check if the character is in the idle state. Useful for AI behaviors.
+		/// </summary>
+		/// <returns>true if it is; false otherwise.</returns>
+		bool IsIdle();
+
+		/// <summary>
+		/// Check if the character is in the walking state. Useful for AI behaviors.
+		/// </summary>
+		/// <returns>true if it is; false otherwise.</returns>
+		bool IsWalking();
+
+		/// <summary>
+		/// Check if the character is in the running state. Useful for AI behaviors.
+		/// </summary>
+		/// <returns>true if it is; false otherwise.</returns>
+		bool IsRunning();
+
+		/// <summary>
+		/// Check if the character is in the attacking state. Useful for AI behaviors.
+		/// </summary>
+		/// <returns>true if it is; false otherwise.</returns>
+		bool IsAttacking();
+
+		/// <summary>
+		/// Check if the character is in the jumping state. Useful for AI behaviors.
+		/// </summary>
+		/// <returns>true if it is; false otherwise.</returns>
+		bool IsJumping();
+
+		/// <summary>
+		/// Check if the character is falling. Useful for AI behaviors.
+		/// </summary>
+		/// <returns>true if he is falling; false otherwise.</returns>
+		bool IsFalling();
+
+		/// <summary>
+		/// Check if the character is in the landing state. Useful for AI behaviors.
+		/// </summary>
+		/// <returns>true if it is landing; false otherwise.</returns>
+		bool IsLanding();
+
+		/// <summary>
+		/// Check if the character is being hurt. Useful for AI behaviors.
+		/// </summary>
+		/// <returns>true if he is being hurt; false otherwise.</returns>
+		bool IsBeingHurt();
+
+		/// <summary>
+		/// Check if the character is dead. Useful for AI behaviors.
+		/// </summary>
+		/// <returns>true if the character is dead; false otherwise.</returns>
+		bool IsDead();
 	}
 } // namespace CSGameUtils

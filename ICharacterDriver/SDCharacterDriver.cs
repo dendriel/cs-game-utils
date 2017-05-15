@@ -569,6 +569,24 @@ namespace CSGameUtils
 		}
 
 		/// <summary>
+		/// Get the characters position.
+		/// </summary>
+		/// <returns>The character position.</returns>
+		public Vector3 GetPosition()
+		{
+			return transform.position;
+		}
+
+		/// <summary>
+		/// Get a MonoBehavior from the character. Useful for starting coroutines in AI behaviors.
+		/// </summary>
+		/// <returns>A MonoBehavior reference.</returns>
+		public MonoBehaviour GetMonoBehavior()
+		{
+			return this;
+		}
+
+		/// <summary>
 		/// Set default character friction with the ground.
 		/// </summary>
 		public virtual void EnableFriction()
@@ -727,17 +745,11 @@ namespace CSGameUtils
 
 		/// <summary>
 		/// Call UpdateRaycastOrigins method before checking this data.
+		/// 
+		/// RaycastOrigins is defined at ICharacterDriver.
 		/// </summary>
 		public RaycastOrigins raycastOrigins;
-
-		public struct RaycastOrigins
-		{
-			public Vector2 topLeft, topRight;
-			public Vector2 bottomLeft, bottomRight;
-			public Vector2 leftCenter, rightCenter;
-			public Vector2 bottomCenter, topCenter;
-		}
-
+		
 		void DisplayGizmos()
 		{
 			//return;
@@ -774,6 +786,16 @@ namespace CSGameUtils
 			raycastOrigins.rightCenter = new Vector2(bounds.max.x, centerY);
 			raycastOrigins.bottomCenter = new Vector2(centerX, bounds.min.y);
 			raycastOrigins.topCenter = new Vector2(centerX, bounds.max.y);
+		}
+
+		/// <summary>
+		/// Get the character's raycast origins.
+		/// </summary>
+		/// <returns>The updated raycast origins from this character.</returns>
+		public RaycastOrigins GetRaycastOrigins()
+		{
+			UpdateRaycastOrigins();
+			return raycastOrigins;
 		}
 
 		/// <summary>
