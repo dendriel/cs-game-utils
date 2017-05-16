@@ -204,6 +204,7 @@ namespace CSGameUtils
 		protected const string jumpTrigger = "Jump";
 		protected const string hurtTrigger = "Hurt";
 		protected const string fallBool = "Fall";
+		protected const string dieTrigger = "Die";
 		// States.
 		protected string idleStateTag = "Idle";
 		protected string walkStartStateTag = "WalkStart";
@@ -223,6 +224,7 @@ namespace CSGameUtils
 		protected string walkAttachStartStateTag = "WalkAttachStart";    
 		protected string walkAttachStateTag = "WalkAttach";
 		protected string walkAttachEndStateTag = "WalkAttachEnd";
+		protected string deadStateTag = "Dead";
 		// Layers.
 		protected const int groundLayerIdx = 0;
 
@@ -508,6 +510,7 @@ namespace CSGameUtils
 		{
 			if (IsBeingHurt() || IsDead()) return false;
 
+			Debug.Log("Being hit!!");
 			anim.SetTrigger(hurtTrigger);
 			//EnableFriction();
 
@@ -521,11 +524,40 @@ namespace CSGameUtils
 		{
 			// May not be jumping anymore. (maybe started falling when preparing to jump).
 			if (!IsJumping()) return;
-
+			
 			// Set vertical speed to zero or it will increase the jump length.
 			rb2D.velocity = new Vector2(rb2D.velocity.x, 0f);
 			// Add jump force.
 			rb2D.AddForce(new Vector2(0, JumpForce));
+		}
+
+		/// <summary>
+		/// Add an impulse in the character towards its facing direction.
+		/// </summary>
+		/// <param name="value">The impulse value.</param>
+		/// <param name="reverse">The impulse should be reversed? (towards the character backing direction?)</param>
+		protected virtual void AddImpulse(Vector2 value, bool reverseX = false)
+		{
+			// Add impulse towards facing direction.
+			value.x *= ((FacingRight) ? 1 : -1);
+			// Reverse if needed.
+			value.x *= ((reverseX) ? -1 : 1);
+
+			// Add jump force.
+			rb2D.AddForce(value, ForceMode2D.Impulse);
+		}
+
+		/// <summary>
+		/// Wrapper callback. Needed because animations doesn't support callbacks with more than one parameter.
+		/// </summary>
+		/// <param name="value"></param>
+		protected virtual void AddImpulseCb(float value)
+		{
+			AddImpulse(new Vector2(value, 0));
+		}
+		protected virtual void AddImpulseReversedCb(float value)
+		{
+			AddImpulse(new Vector2(value, 0), true);
 		}
 
 		/// <summary>
@@ -651,55 +683,55 @@ namespace CSGameUtils
 		/// Check if the character is in the idle state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public bool IsIdle() { return IsCurrentAnimationName(idleStateTag); }
+		public virtual bool IsIdle() { return IsCurrentAnimationName(idleStateTag); }
 
 		/// <summary>
 		/// Check if the character is in the walking state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public bool IsWalking() { return IsCurrentAnimationName(walkStateTag, walkStartStateTag, walkEndStateTag); }
+		public virtual bool IsWalking() { return IsCurrentAnimationName(walkStateTag, walkStartStateTag, walkEndStateTag); }
 
 		/// <summary>
 		/// Check if the character is in the running state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public bool IsRunning() { return IsCurrentAnimationName(runStateTag, runStartStateTag, runEndStateTag); }
+		public virtual bool IsRunning() { return IsCurrentAnimationName(runStateTag, runStartStateTag, runEndStateTag); }
 
 		/// <summary>
 		/// Check if the character is in the attacking state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public bool IsAttacking() { return IsCurrentAnimationName(attackStateTag); }
+		public virtual bool IsAttacking() { return IsCurrentAnimationName(attackStateTag); }
     
 		/// <summary>
 		/// Check if the character is in the jumping state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public bool IsJumping() { return IsCurrentAnimationName(jumpStateTag); }
+		public virtual bool IsJumping() { return IsCurrentAnimationName(jumpStateTag); }
 
 		/// <summary>
 		/// Check if the character is falling.
 		/// </summary>
 		/// <returns>true if he is falling; false otherwise.</returns>
-		public bool IsFalling() { return (IsGrounded()) ? false : (rb2D.velocity.y < 0); }
+		public virtual bool IsFalling() { return (IsGrounded()) ? false : (rb2D.velocity.y < 0); }
 
 		/// <summary>
 		/// Check if the character is in the landing state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public bool IsLanding() { return IsCurrentAnimationName(landStateTag); }
+		public virtual bool IsLanding() { return IsCurrentAnimationName(landStateTag); }
 
 		/// <summary>
 		/// Check if the character is being hurt.
 		/// </summary>
 		/// <returns>true if he is being hurt; false otherwise.</returns>
-		public bool IsBeingHurt() { return false; }//} anim.IsCurrentAnimationName(hurtStateTag); }
+		public virtual bool IsBeingHurt() { return false; }//} anim.IsCurrentAnimationName(hurtStateTag); }
 
 		/// <summary>
 		/// Check if the character is dead.
 		/// </summary>
 		/// <returns>true if the character is dead; false otherwise.</returns>
-		public bool IsDead() { return false; }
+		public virtual bool IsDead() { return IsCurrentAnimationName(deadStateTag); }
 
 
 		/// <summary>
