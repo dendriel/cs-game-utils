@@ -738,7 +738,7 @@ namespace CSGameUtils
 		/// Check if the character is being hurt.
 		/// </summary>
 		/// <returns>true if he is being hurt; false otherwise.</returns>
-		public virtual bool IsBeingHurt() { return false; }//} anim.IsCurrentAnimationName(hurtStateTag); }
+		public virtual bool IsBeingHurt() { return IsCurrentAnimationName(hurtStateTag); }
 
 		/// <summary>
 		/// Check if the character is dead.

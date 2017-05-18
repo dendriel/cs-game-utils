@@ -73,6 +73,7 @@ namespace CSGameUtils
 			// Check if the target is inside range.
 			RaycastHit2D hit = Physics2D.BoxCast(center, range, 0, ((isFacingRight) ? Vector2.right : Vector2.left), 0, targetLayer);
 
+			// May be necessary to check if the target is alive!
 			return (hit.transform != null);
 		}
 	}
