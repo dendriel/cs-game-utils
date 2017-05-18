@@ -500,7 +500,10 @@ namespace CSGameUtils
 			EnableFriction();
 
 			// TODO: REVIEW THIS. the animator is still adding force.
-			AddJumpForceCb();
+			// I believe that because the characte is still in other animation than "Jumping", the method returns
+			// without adding the jump force. So, keep calling the AddJumpForceCb() from the animation. It works and
+			// we can set the right key frame to start adding impulse.
+			//AddJumpForceCb();
 		}
 
 		/// <summary>
@@ -523,12 +526,22 @@ namespace CSGameUtils
 		protected virtual void AddJumpForceCb()
 		{
 			// May not be jumping anymore. (maybe started falling when preparing to jump).
-			if (!IsJumping()) return;
+			// This condition may cause problems if the animations have some transition duration set.
+			if (!CanJump()) return;
 			
 			// Set vertical speed to zero or it will increase the jump length.
 			rb2D.velocity = new Vector2(rb2D.velocity.x, 0f);
 			// Add jump force.
 			rb2D.AddForce(new Vector2(0, JumpForce));
+		}
+
+		/// <summary>
+		/// Checks if the character is able to jump.
+		/// </summary>
+		/// <returns>true if it can jump; false otherwise.</returns>
+		protected virtual bool CanJump()
+		{
+			return IsJumping();
 		}
 
 		/// <summary>
