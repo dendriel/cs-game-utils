@@ -16,36 +16,33 @@
  *	You should have received a copy of the GNU General Public License
  *	along with Wasp Behavior. If not, see<http://www.gnu.org/licenses/>.
  */
-using BehaviorLibrary;
-using BehaviorLibrary.Components.Actions;
+using BehaviorLibrary.Components.Conditionals;
 
 namespace CSGameUtils
 {
 	/// <summary>
-	/// Execute the Attack A method from the given character.
+	/// Conditional to check if the character is Hurt.
 	/// </summary>
-	public class AttackAAction : BehaviorAction
+	public class IsHurtConditional : Conditional
 	{
 		/// <summary>
-		/// Character driver (onwer of the action).
+		/// Character driver (onwer of the condition).
 		/// </summary>
-		protected ICharacterDriver charDriver;
-    
+		ICharacterDriver charDriver;
+
 		/// <summary>
-		/// Create a new AttackAAction.
+		/// Create a new IsHurtConditional.
 		/// </summary>
-		/// <param name="_charDriver">The driver of the character that will perform the attack.</param>
-		public AttackAAction(ICharacterDriver _charDriver)
+		/// <param name="_charDriver">The driver of the character to check if it is Hurt.</param>
+		public IsHurtConditional(ICharacterDriver _charDriver)
 		{
 			charDriver = _charDriver;
-			_Action = AttackAExec;
+			_Bool = IsHurtTest;
 		}
-    
-		protected virtual BehaviorReturnCode AttackAExec()
+
+		bool IsHurtTest()
 		{
-			charDriver.AttackA();
-			return BehaviorReturnCode.Success;
+			return charDriver.IsBeingHurt();
 		}
 	}
 } // namespace CSGameUtils
-

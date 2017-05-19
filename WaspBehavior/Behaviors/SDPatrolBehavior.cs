@@ -149,14 +149,21 @@ namespace CSGameUtils
 			Selector patrol = new Selector(isAttacking, checkTargetSeq, isWaiting, checkMovementSel);
 			
 			behavior = new Behavior(new Sequence(patrol));
+		}        
+
+		void OnDrawGizmosSelected()
+		{
+			// If not playing, there is no driver assigned.
+			DisplayAttackArea((charDriver == null) ? GetComponent<ICharacterDriver>() : charDriver, range);
 		}
-        
+
 		/// <summary>
 		/// Display the attack area.
 		/// </summary>
-		void OnDrawGizmosSelected()
+		/// <param name="driver">Character's driver.</param>
+		/// <param name="range">Attack range.</param>
+		public static void DisplayAttackArea(ICharacterDriver driver, Vector2 range)
 		{
-			ICharacterDriver driver = GetComponent<ICharacterDriver>();
 			RaycastOrigins raycastOrigins = driver.GetRaycastOrigins();
 			bool isFacingRight = driver.IsFacingRight();
 

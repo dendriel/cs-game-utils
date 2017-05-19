@@ -16,36 +16,41 @@
  *	You should have received a copy of the GNU General Public License
  *	along with Wasp Behavior. If not, see<http://www.gnu.org/licenses/>.
  */
-using BehaviorLibrary;
-using BehaviorLibrary.Components.Actions;
+using BehaviorLibrary.Components.Conditionals;
+using UnityEngine;
+using System;
 
 namespace CSGameUtils
 {
 	/// <summary>
-	/// Execute the Attack A method from the given character.
+	/// Check if there a assigned target.
 	/// </summary>
-	public class AttackAAction : BehaviorAction
+	public class IsTargetAssignedConditional : Conditional
 	{
 		/// <summary>
-		/// Character driver (onwer of the action).
+		/// A Func to retrieve the current target.
 		/// </summary>
-		protected ICharacterDriver charDriver;
-    
+		Func<GameObject> GetTargetFunc;
+
 		/// <summary>
-		/// Create a new AttackAAction.
+		/// Create a new IsTargetAssignedConditional condition.
 		/// </summary>
-		/// <param name="_charDriver">The driver of the character that will perform the attack.</param>
-		public AttackAAction(ICharacterDriver _charDriver)
+		/// <param name="_GetTargetFunc">A Func to retrieve the current target GameObject.</param>
+		public IsTargetAssignedConditional(Func<GameObject> _GetTargetFunc)
 		{
-			charDriver = _charDriver;
-			_Action = AttackAExec;
+			GetTargetFunc = _GetTargetFunc;
+			_Bool = IsTargetAssignedTest;
 		}
-    
-		protected virtual BehaviorReturnCode AttackAExec()
+
+		bool IsTargetAssignedTest()
 		{
-			charDriver.AttackA();
-			return BehaviorReturnCode.Success;
+			GameObject target = GetTargetFunc();
+
+			if ((target != null) && target.activeSelf) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 } // namespace CSGameUtils
-

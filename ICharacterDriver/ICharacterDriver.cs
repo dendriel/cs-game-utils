@@ -101,6 +101,11 @@ namespace CSGameUtils
 		void AttackB();
 
 		/// <summary>
+		/// Flip the character (change its facing direction).
+		/// </summary>
+		void Flip();
+
+		/// <summary>
 		/// The character is facing to the right?
 		/// </summary>
 		bool IsFacingRight();
