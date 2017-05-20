@@ -128,12 +128,12 @@ namespace CSGameUtils
 		/// <summary>
 		/// Displays a hit text over the target character.
 		/// </summary>
-		/// <param name="target">The transform of the character.</param>
+		/// <param name="target">The position of the character.</param>
 		/// <param name="name">Name of the item picked.</param>
 		/// <param name="amount">Amount of gold picked.</param>
 		/// <param name="isValuable">Is picking a valuable?</param>
 		/// <param name="infinite">The picked item is infinite?</param>
-		public void DisplayPickupText(Transform target, string name, int amount = 0, bool isValuable = false, bool infinite = false)
+		public void DisplayPickupText(Vector3 target, string name, int amount = 0, bool isValuable = false, bool infinite = false)
 		{
 			GameObject textGO = GetText();
 			if (textGO == null) return;
@@ -141,7 +141,7 @@ namespace CSGameUtils
 			TextEFX textEFX = textGO.GetComponent<TextEFX>();
 			Assert.IsNotNull<TextEFX>(textEFX, "Could not find the TextEFX component in the text GO.");
 
-			textEFX.TargetPos = target.position;
+			textEFX.TargetPos = target;
 			textEFX.DisplayText = "+";
 			textEFX.DisplayText += (infinite)? "" : amount.ToString() + " ";
 			textEFX.DisplayText += name + ((amount > 1)? "s" : "");
@@ -154,6 +154,10 @@ namespace CSGameUtils
 
 			textEFX.enabled = true;
 			textGO.SetActive(true);
+		}
+		public void DisplayPickupText(Transform target, string name, int amount = 0, bool isValuable = false, bool infinite = false)
+		{
+			DisplayPickupText(target.transform.position, name, amount, isValuable, infinite);
 		}
 	}
 } // namespace CSGameUtils

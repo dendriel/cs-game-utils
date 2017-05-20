@@ -60,6 +60,7 @@ namespace CSGameUtils
 			charDriver = _charDriver;
 			GetTargetFunc = _GetTargetFunc;
 			SetDestnFunc = _SetDestnFunc;
+			offset = _offset;
 
 			_Action = PickPointInFrontOfTargetExec;
 		}

@@ -53,6 +53,8 @@ namespace CSGameUtils
 		{
 			charDriver = _charDriver;
 			GetTargetFunc = _GetTargetFunc;
+			reverse = _reverse;
+
 			_Action = SDSetFaceToTargetExec;
 		}
     
