@@ -21,9 +21,9 @@ using BehaviorLibrary.Components.Conditionals;
 namespace CSGameUtils
 {
 	/// <summary>
-	/// Conditional to check if the character is hurt.
+	/// Conditional to check if the character is dead.
 	/// </summary>
-	public class IsHurtConditional : Conditional
+	public class IsDeadConditional : Conditional
 	{
 		/// <summary>
 		/// Character driver (onwer of the condition).
@@ -31,18 +31,18 @@ namespace CSGameUtils
 		ICharacterDriver charDriver;
 
 		/// <summary>
-		/// Create a new IsHurtConditional.
+		/// Create a new IsDeadConditional.
 		/// </summary>
-		/// <param name="_charDriver">The driver of the character to check if it is hurt.</param>
-		public IsHurtConditional(ICharacterDriver _charDriver)
+		/// <param name="_charDriver">The driver of the character to check if it is dead.</param>
+		public IsDeadConditional(ICharacterDriver _charDriver)
 		{
 			charDriver = _charDriver;
-			_Bool = IsHurtTest;
+			_Bool = IsDeadTest;
 		}
 
-		bool IsHurtTest()
+		bool IsDeadTest()
 		{
-			return charDriver.IsBeingHurt();
+			return charDriver.IsDead();
 		}
 	}
 } // namespace CSGameUtils
