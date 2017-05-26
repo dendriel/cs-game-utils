@@ -58,14 +58,23 @@ public class GORef : MonoBehaviour
 
     /// <summary>
     /// Save a reference in the dictionary. May be used from non-monobehavior to store GO references.
+	/// 
+	/// Updates the key if already in the dictionary.
     /// </summary>
     /// <param name="key">The key used to refer to the game object.</param>
     /// <param name="go">The game object to be saved.</param>
     public static void AddRef(string key, GameObject go)
     {
 		Assert.IsTrue (GORefs != null, "WARNING: GORefs not initialized!");
-        Assert.IsFalse(GORefs.ContainsKey(key), "Trying to register an invalid dictionary key. The key is already registered: " + key);
-        GORefs.Add(key, go);
+		
+		// This condition requires that every time we load a scene we must call ClearGORef(). Now, we are updating the keys instead of throwing exceptions.
+        //Assert.IsFalse(GORefs.ContainsKey(key), "Trying to register an invalid dictionary key. The key is already registered: " + key);
+
+		if (GORefs.ContainsKey(key)) {
+			GORefs[key] = go;
+		} else {
+			GORefs.Add(key, go);
+		}
 		//Debug.Log ("Added ref: " + key);
     }
 
