@@ -21,7 +21,8 @@ using System;
 using System.Collections;
 
 
-namespace CSGameUtils {
+namespace CSGameUtils
+{
 	/// <summary>
 	/// Handles ActionTimer data. This is a timer that triggers a given callback after some time.
 	/// </summary>
@@ -111,8 +112,18 @@ namespace CSGameUtils {
 		public ActionTimer(float min, float max, Action actionCb)
 		{
 			actionDoneCallback = actionCb;
-
 			DefaultConstructor(min, max);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the ActionTimer class.
+		/// </summary>
+		/// <param name="max">Time to wait.</param>
+		/// <param name="actionCb">Callback to be called when the timer finishes (whithout parameter).</param>
+		public ActionTimer(float timeToWait, Action actionCb)
+		{
+			actionDoneCallback = actionCb;
+			DefaultConstructor(timeToWait, timeToWait);
 		}
 
 		/// <summary>
@@ -190,5 +201,20 @@ namespace CSGameUtils {
 				actionDoneWithParamCallback(DataToReturn);
 			}
 		}
+	}
+
+	/// <summary>
+	/// ActionTimer wrapper so we don't need to setup a Type if we won't be using it.
+	/// </summary>
+	public class ActionTimer : ActionTimer<float>
+	{
+		/// <summary>
+		/// Initializes a new instance of the ActionTimer class.
+		/// </summary>
+		/// <param name="min">Minimum time to wait.</param>
+		/// <param name="max">Maximum time to wait.</param>
+		/// <param name="actionCb">Callback to be called when the timer finishes (whithout parameter).</param>
+		public ActionTimer(float timeToWait, Action actionCb) : base(timeToWait, actionCb)
+		{ }
 	}
 } // namespace CSGameUtils
