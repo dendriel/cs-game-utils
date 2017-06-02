@@ -40,6 +40,13 @@ namespace CSGameUtils
 	{
 		protected Behavior behavior;
 
+		/// <summary>
+		/// This behavior may be enabled by "send message" callback/command?
+		/// Useful when we have more than one behavior in a GO. Leave true for the first behavior
+		/// that must be executed.
+		/// </summary>
+		public bool EnabledByCmd = true;
+
 		protected virtual void OnEnable()
 		{
 			// Sanitize every time the behavior is enabled (otherwise may contain some garbage from previous execution).
@@ -72,7 +79,9 @@ namespace CSGameUtils
 
 		public virtual void SetEnabledCmd(string enabled)
 		{
-			this.enabled = Convert.ToBoolean(enabled);
+			if (EnabledByCmd) {
+				this.enabled = Convert.ToBoolean(enabled);
+			}
 		}
 	}
 } // namespace CSGameUtils

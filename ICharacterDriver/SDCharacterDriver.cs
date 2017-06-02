@@ -673,7 +673,7 @@ namespace CSGameUtils
 				for (int j = 0; j < hitList.Length; j++) {
 					RaycastHit2D hit = hitList[j];
 					if ((hit.collider != null) && (hit.collider.isTrigger == false)) {
-						if (hit.distance <= groundMinDist) {
+						if ((hit.distance <= groundMinDist) && (rb2D.velocity.y <= 0.1f)) {
 							return true;
 						}
 					}

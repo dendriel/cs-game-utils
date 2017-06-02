@@ -20,92 +20,115 @@ using UnityEngine;
 
 namespace CSGameUtils {
 
-/// <summary>
-/// Provides functionality to control an entity (character, interface, etc).
-/// </summary>
-public class PlayerController : MonoBehaviour
-{
-    IPlayerController movementCtrl;
-    IPlayerController actionCtrl;
-    
-	// Use this for initialization
-    void Start()
-    {
-        movementCtrl = new KeyboardController();
-        actionCtrl = new MouseController();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-		// WARNING: don't forget to call Update() from controllers' instances!
-        movementCtrl.Update();
-        actionCtrl.Update();
-
-        HandleAttack();
-		HandleActions();
-        HandleOptions();
-    }
-
-    void FixedUpdate()
-    {
-        HandleMovement();
-    }
-
-    /// <summary>
-    /// Handle the options commands.
-    /// </summary>
-    void HandleOptions()
-    {
-		if (movementCtrl.StartDown()) {
-			Debug.Log("Game paused!");
-		}
-    }
-
 	/// <summary>
-	/// Handle attack commands.
+	/// Provides functionality to control an entity (character, interface, etc).
 	/// </summary>
-	void HandleAttack()
+	public class PlayerController : MonoBehaviour
 	{
-		if (actionCtrl.AttackAReleased()) {
-			Debug.Log("Attack A!!");
-		} else if (actionCtrl.AttackBReleased()) {
-			Debug.Log("Attack B!!");
+		IPlayerController movementCtrl;
+		IPlayerController actionCtrl;
+
+		/// <summary>
+		/// Defubes if the character control is enabled.
+		/// </summary>
+		bool charCtrlEnabled = true;
+
+		// Use this for initialization
+		void Start()
+		{
+			movementCtrl = new KeyboardController();
+			actionCtrl = new MouseController();
+		}
+
+		// Update is called once per frame
+		void Update()
+		{
+			// WARNING: don't forget to call Update() from controllers' instances!
+			movementCtrl.Update();
+			actionCtrl.Update();
+
+			if (charCtrlEnabled) {
+				HandleAttack();
+				HandleActions();
+				HandleOptions();
+			}
+		}
+
+		void FixedUpdate()
+		{
+			HandleMovement();
+		}
+
+		/// <summary>
+		/// Handle the options commands.
+		/// </summary>
+		void HandleOptions()
+		{
+			if (movementCtrl.StartDown()) {
+				Debug.Log("Game paused!");
+			}
+		}
+
+		/// <summary>
+		/// Handle attack commands.
+		/// </summary>
+		void HandleAttack()
+		{
+			if (actionCtrl.AttackAReleased()) {
+				Debug.Log("Attack A!!");
+			} else if (actionCtrl.AttackBReleased()) {
+				Debug.Log("Attack B!!");
+			}
+		}
+
+		/// <summary>
+		/// Handle actions commands.
+		/// </summary>
+		void HandleActions()
+		{
+			if (movementCtrl.JumpDown()) {
+				Debug.Log("Jumping!");
+			} else if (movementCtrl.DodgeDown()) {
+				Debug.Log("Dodging!");
+			} else if (actionCtrl.ActionPressed()) {
+				Debug.Log("Action pressed!!");
+			}
+		}
+
+		/// <summary>
+		/// Handle the player actions (commands to the character).
+		/// </summary>
+		void HandleMovement()
+		{
+			// Horizontal movement.
+			if (movementCtrl.LeftPressed()) {
+				Debug.Log("Move to the left.");
+			} else if (movementCtrl.RightPressed()) {
+				Debug.Log("Move to the right.");
+			}
+
+			// Vertical movement.
+			if (movementCtrl.TopPressed()) {
+				Debug.Log("Move to the top.");
+			} else if (movementCtrl.DownPressed()) {
+				Debug.Log("Move to the bottom.");
+			}
+		}
+
+		/// <summary>
+		/// Enable character control.
+		/// </summary>
+		public void EnableCharacterControl()
+		{
+			charCtrlEnabled = true;
+		}
+
+		/// <summary>
+		/// Disable character control. Useful when playing  cutscenes.
+		/// </summary>
+		public void DisableCharacterControl()
+		{
+			charCtrlEnabled = false;
 		}
 	}
-
-	/// <summary>
-	/// Handle actions commands.
-	/// </summary>
-	void HandleActions()
-	{
-		if (movementCtrl.JumpDown()) {
-			Debug.Log("Jumping!");
-		} else if (movementCtrl.DodgeDown()) {
-			Debug.Log("Dodging!");
-		} else if (actionCtrl.ActionPressed()) {
-			Debug.Log("Action pressed!!");
-		}
-	}
-
-    /// <summary>
-    /// Handle the player actions (commands to the character).
-    /// </summary>
-    void HandleMovement()
-    {
-        // Horizontal movement.
-        if (movementCtrl.LeftPressed()) {
-			Debug.Log("Move to the left.");
-        } else if (movementCtrl.RightPressed()) {
-			Debug.Log("Move to the right.");
-        }
-
-        // Vertical movement.
-        if (movementCtrl.TopPressed()) {
-			Debug.Log("Move to the top.");
-        } else if (movementCtrl.DownPressed()) {
-			Debug.Log("Move to the bottom.");
-		}
-    }
-}
 } // namespace CSGameUtils
