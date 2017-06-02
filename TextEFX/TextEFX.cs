@@ -59,10 +59,28 @@ namespace CSGameUtils
 		public float DecayTime = 1.5f;
 
 		/// <summary>
-		///Text to be displayed.
+		/// Text to be displayed.
 		/// </summary>
 		public string DisplayText;
+		
+		/// <summary>
+		/// Text Sorting layer.
+		/// </summary>
+		public string TextSortingLayer;
+		
+		/// <summary>
+		/// Text Layer order.
+		/// </summary>
+		public int TextOrderInLayer;
 
+		// Use this for initialization
+		void Start()
+		{
+			// Setup mesh renderer sorting layer and order.
+			MeshRenderer renderer = GetComponent<MeshRenderer>();
+			renderer.sortingLayerName = TextSortingLayer;
+			renderer.sortingOrder = TextOrderInLayer;
+		}
 		/// <summary>
 		/// Text renderer.
 		/// </summary>
