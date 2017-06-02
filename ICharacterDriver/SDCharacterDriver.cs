@@ -245,9 +245,9 @@ namespace CSGameUtils
 		protected virtual void Update()
 		{
 			if (IsFalling() && (IsBeingHurt() == false) && (IsDead() == false)) {
-				anim.SetBool(fallBool, true);
+				SetFalling();
 			} else {
-				anim.SetBool(fallBool, false);
+				UnsetFalling();
 			}
 
 			if (IsLanding() || IsAttacking() || IsDead()) {
@@ -274,6 +274,22 @@ namespace CSGameUtils
 			} else if (MayDie && IsHittingTheGroundHard()) {
 				DeathByFalling();
 			}
+		}
+
+		/// <summary>
+		/// The character started to fall.
+		/// </summary>
+		protected virtual void SetFalling()
+		{
+			anim.SetBool(fallBool, true);
+		}
+
+		/// <summary>
+		/// The character stopped to fall.
+		/// </summary>
+		protected virtual void UnsetFalling()
+		{
+			anim.SetBool(fallBool, false);
 		}
 
 		/// <summary>
