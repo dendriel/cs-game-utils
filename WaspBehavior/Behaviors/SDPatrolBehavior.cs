@@ -154,7 +154,7 @@ namespace CSGameUtils
 		void OnDrawGizmosSelected()
 		{
 			// If not playing, there is no driver assigned.
-			DisplayAttackArea((charDriver == null) ? GetComponent<ICharacterDriver>() : charDriver, range);
+			DisplayAttackArea((charDriver == null) ? GetComponent<ICharacterDriver>() : charDriver, range, Vector2.zero);
 		}
 
 		/// <summary>
@@ -162,12 +162,16 @@ namespace CSGameUtils
 		/// </summary>
 		/// <param name="driver">Character's driver.</param>
 		/// <param name="range">Attack range.</param>
-		public static void DisplayAttackArea(ICharacterDriver driver, Vector2 range)
+		public static void DisplayAttackArea(ICharacterDriver driver, Vector2 range, Vector2 offset)
 		{
 			RaycastOrigins raycastOrigins = driver.GetRaycastOrigins();
 			bool isFacingRight = driver.IsFacingRight();
 
 			Vector2 center = ((isFacingRight) ? raycastOrigins.rightCenter : raycastOrigins.leftCenter);
+
+			// Add offset.
+			center.x += offset.x * ((isFacingRight) ? 1 : -1);
+			center.y += offset.y;
 
 			// Centralize the central point.
 			center.x += (range.x / 2) * ((isFacingRight) ? 1 : -1);

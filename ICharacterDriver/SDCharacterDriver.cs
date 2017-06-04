@@ -182,6 +182,7 @@ namespace CSGameUtils
 		/// </summary>
 		[SerializeField]
 		protected LayerMask whatIsGround;
+		public LayerMask WhatIsGround() { Debug.Log("HERE: " + whatIsGround.value); return whatIsGround; }
 
 		/// <summary>
 		/// The grounded check function always return true. Useful for controlling characters that may fly.

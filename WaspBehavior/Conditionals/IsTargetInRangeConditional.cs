@@ -43,6 +43,11 @@ namespace CSGameUtils
 		Vector2 range;
 
 		/// <summary>
+		/// Offset of the collision box.
+		/// </summary>
+		Vector2 offset;
+
+		/// <summary>
 		/// Target transform.
 		/// </summary>
 		LayerMask targetLayer;
@@ -58,6 +63,23 @@ namespace CSGameUtils
 			charDriver = _charDriver;
 			targetLayer = _targetLayer;
 			range = _range;
+			offset = Vector2.zero;
+			_Bool = IsTargetInRangeTest;
+		}
+
+		/// <summary>
+		/// Create a new IsTargetInRangeConditional.
+		/// </summary>
+		/// <param name="_charDriver">The character driver from the onwer of this action.</param>
+		/// <param name="_targetLayer">The target layer mask (to check collisions).</param>
+		/// <param name="_range">The range (as a box).</param>
+		/// <param name="_offset">Add an offset to the collision box position.</param>
+		public IsTargetInRangeConditional(ICharacterDriver _charDriver, LayerMask _targetLayer, Vector2 _range, Vector2 _offset)
+		{
+			charDriver = _charDriver;
+			targetLayer = _targetLayer;
+			range = _range;
+			offset = _offset;
 			_Bool = IsTargetInRangeTest;
 		}
 
@@ -69,6 +91,10 @@ namespace CSGameUtils
 
 			// Align the box to one of the sides.
 			center.x += (range.x / 2) * ((isFacingRight) ? 1 : -1);
+
+			// Add the offset.
+			center.x += offset.x * ((isFacingRight) ? 1 : -1);
+			center.y += offset.y;
 
 			// Check if the target is inside range.
 			RaycastHit2D hit = Physics2D.BoxCast(center, range, 0, ((isFacingRight) ? Vector2.right : Vector2.left), 0, targetLayer);

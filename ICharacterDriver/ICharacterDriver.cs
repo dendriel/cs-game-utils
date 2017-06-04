@@ -136,6 +136,18 @@ namespace CSGameUtils
 		RaycastOrigins GetRaycastOrigins();
 
 		/// <summary>
+		/// What is ground for this character.
+		/// </summary>
+		/// <returns>A layermask for what is ground.</returns>
+		LayerMask WhatIsGround();
+
+		/// <summary>
+		/// The character is grounded?
+		/// </summary>
+		/// <returns></returns>
+		bool IsGrounded();
+
+		/// <summary>
 		/// Check if the character is in the idle state. Useful for AI behaviors.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
