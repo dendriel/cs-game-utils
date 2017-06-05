@@ -75,6 +75,7 @@ namespace CSGameUtils
 				}
 			}
 
+			Debug.Log("Face the target");
 			return BehaviorReturnCode.Success;
 		}
 	}

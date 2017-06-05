@@ -17,6 +17,7 @@
  *	along with Wasp Behavior. If not, see<http://www.gnu.org/licenses/>.
  */
 using BehaviorLibrary.Components.Conditionals;
+using UnityEngine;
 
 namespace CSGameUtils
 {
@@ -42,6 +43,7 @@ namespace CSGameUtils
 
 		bool IsGroundedTest()
 		{
+			Debug.Log("Grounded: " + charDriver.IsGrounded());
 			return charDriver.IsGrounded();
 		}
 	}
