@@ -43,7 +43,6 @@ namespace CSGameUtils
 
 		bool IsGroundedTest()
 		{
-			Debug.Log("Grounded: " + charDriver.IsGrounded());
 			return charDriver.IsGrounded();
 		}
 	}

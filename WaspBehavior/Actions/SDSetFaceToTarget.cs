@@ -74,8 +74,7 @@ namespace CSGameUtils
 					charDriver.Flip();
 				}
 			}
-
-			Debug.Log("Face the target");
+			
 			return BehaviorReturnCode.Success;
 		}
 	}

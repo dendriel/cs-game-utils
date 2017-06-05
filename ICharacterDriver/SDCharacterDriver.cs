@@ -419,10 +419,8 @@ namespace CSGameUtils
 				anim.SetBool(runBool, false);
 			} else if (speed.x == RunSpeed.x) {
 				anim.SetBool(runBool, grounded);
-			}
-		
-			FlipTo(dir);
-        
+			}								
+
 			// If the character is in the air, moving will just set the direction, but won't add any force.
 			if (grounded == false) {
 				if (airControl &&
@@ -432,6 +430,9 @@ namespace CSGameUtils
 				}
 				//return; // uncomment this line to disallow adding force in the air.
 			}
+
+			// If grounded, may flip. If not grounded but airControl, may flip.
+			if (grounded || airControl) FlipTo(dir);
 
 			if (dir.x != 0) {
 				rb2D.velocity = new Vector2(speed.x * dir.x, rb2D.velocity.y);
@@ -545,7 +546,8 @@ namespace CSGameUtils
 			// May not be jumping anymore. (maybe started falling when preparing to jump).
 			// This condition may cause problems if the animations have some transition duration set.
 			if (!CanJump()) return;
-			
+
+			// WARNING: clearing the velocity won't work sometimes.
 			// Set vertical speed to zero or it will increase the jump length.
 			rb2D.velocity = new Vector2(rb2D.velocity.x, 0f);
 			// Add jump force.
