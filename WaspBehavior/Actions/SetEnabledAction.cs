@@ -34,7 +34,6 @@ namespace CSGameUtils
 
 		BehaviorReturnCode SetEnabledExec()
 		{
-			Debug.Log("Active component!!");
 			component.enabled = active;
 			return BehaviorReturnCode.Success;
 		}
