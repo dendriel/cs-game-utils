@@ -433,7 +433,7 @@ namespace CSGameUtils
 
 			// If grounded, may flip. If not grounded but airControl, may flip.
 			if (grounded || airControl) FlipTo(dir);
-
+			
 			if (dir.x != 0) {
 				rb2D.velocity = new Vector2(speed.x * dir.x, rb2D.velocity.y);
 			} else {
@@ -604,7 +604,7 @@ namespace CSGameUtils
 
 			if (zeroVelocity) {
 				rb2D.velocity = Vector2.zero;
-				// May it's necessary to also stop rotation.
+				// Maybe it's also necessary to stop rotation.
 			}
 		}
 
@@ -791,6 +791,16 @@ namespace CSGameUtils
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// Check if a trigger is set.
+		/// </summary>
+		/// <param name="trigger">The trigger to be checked.</param>
+		/// <returns>true if the trigger is set; false otherwise.</returns>
+		protected bool IsTriggerSet(string trigger)
+		{
+			return anim.GetBool(trigger);
 		}
 
 		/**
