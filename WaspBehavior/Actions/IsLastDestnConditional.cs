@@ -58,6 +58,7 @@ namespace CSGameUtils
 			//Debug.Log("IsLastDestnTest: " + (currDestnIdx == (GetDestnPoints().Length - 1)) + " - currDesnIdx: " + currDestnIdx + " - Destns: " + GetDestnPoints().Length);
 
 			// Check if there are any destinations to go. Sometimes, the SP can be calculated right after the character arrived the last destination, so won't be anywhere else to go.
+			Debug.Log("Is last destn? curr: " + currDestnIdx  +" - " + ((currDestnIdx == (destnsLen - 1)) || (destnsLen == 0)));
 			return ((currDestnIdx == (destnsLen - 1)) || (destnsLen == 0));
 		}
 	}

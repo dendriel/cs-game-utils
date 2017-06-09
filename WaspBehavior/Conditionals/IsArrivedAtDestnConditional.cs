@@ -48,26 +48,32 @@ namespace CSGameUtils
 		bool checkAxis;
 
 		/// <summary>
+		/// Offset to be used while checking if arrived.
+		/// </summary>
+		float offset;
+
+		/// <summary>
 		/// Create a new IsArrivedAtDestnConditional.
 		/// </summary>
 		/// <param name="_charDriver">The character driver (transform) to check.</param>
 		/// <param name="_GetDestnFunc">A Func to retrieve the current destination.</param>
 		/// <param name="_checkAxis">Will check both, horizontal and vertical positioning. (default is false; check only
 		/// horizontal axis).</param>
-		public IsArrivedAtDestnConditional(ICharacterDriver _charDriver, Func<Vector3> _GetDestnFunc, bool _checkAxis = false)
+		public IsArrivedAtDestnConditional(ICharacterDriver _charDriver, Func<Vector3> _GetDestnFunc, bool _checkAxis = false, float _offset = Offset)
 		{
 			charDriver = _charDriver;
 			GetDestnFunc = _GetDestnFunc;
 			checkAxis = _checkAxis;
+			offset = _offset;
 
 			_Bool = IsArrivedAtDestinationTest;
 		}
 
 		bool IsArrivedAtDestinationTest()
-		{
+		{			
 			Vector3 destn = GetDestnFunc();
-			float minDestnBoundX = destn.x - Offset;
-			float maxDestnBoundX = destn.x + Offset;
+			float minDestnBoundX = destn.x - offset;
+			float maxDestnBoundX = destn.x + offset;
 			Vector3 charPos = charDriver.GetPosition();
 			float currPosX = charPos.x;
 
@@ -77,8 +83,8 @@ namespace CSGameUtils
 			if ((currPosX >= minDestnBoundX) && (currPosX <= maxDestnBoundX)) {
 				// If must consider Y axis.
 				if (checkAxis) {
-					float minDestnBoundY = destn.y - Offset;
-					float maxDestnBoundY = destn.y + Offset;
+					float minDestnBoundY = destn.y - offset;
+					float maxDestnBoundY = destn.y + offset;
 					float currPosY = charPos.y;
 					// Check if inside Y target. (already inside X, so return true or false depending on Y).
 					return ((currPosY >= minDestnBoundY) && (currPosY <= maxDestnBoundY));

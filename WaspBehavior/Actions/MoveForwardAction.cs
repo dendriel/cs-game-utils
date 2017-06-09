@@ -18,6 +18,7 @@
  */
 using BehaviorLibrary;
 using BehaviorLibrary.Components.Actions;
+using UnityEngine;
 
 namespace CSGameUtils
 {
