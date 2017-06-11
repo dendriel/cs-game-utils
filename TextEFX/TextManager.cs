@@ -159,5 +159,29 @@ namespace CSGameUtils
 		{
 			DisplayPickupText(target.transform.position, name, amount, isValuable, infinite);
 		}
+
+		public void DisplayEmotionText(Vector3 target, string text, GameObject textGOToBeUsed = null)
+		{
+			GameObject textGO;
+			if (textGOToBeUsed == null) {
+				textGO = GetText();
+			} else {
+				textGO = textGOToBeUsed;
+			}
+			
+			if (textGO == null) return;
+
+			TextEFX textEFX = textGO.GetComponent<TextEFX>();
+			Assert.IsNotNull<TextEFX>(textEFX, "Could not find the TextEFX component in the text GO.");
+
+			textEFX.TargetPos = target;
+			textEFX.DisplayText = text;
+
+			textEFX.SetupEmotionTextColorTrans();
+
+			textEFX.enabled = true;
+			textGO.SetActive(true);
+
+		}
 	}
 } // namespace CSGameUtils

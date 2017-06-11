@@ -227,5 +227,17 @@ namespace CSGameUtils
 
 			incBlueColor = false;
 		}
+
+		/// <summary>
+		/// Setup text transition colors.
+		/// </summary>
+		public void SetupEmotionTextColorTrans()
+		{
+			StartColor = Color.red;
+			
+			updateRedColor = false;
+			updateGreenColor = false;
+			updateBlueColor = false;
+		}
 	}
 } // namespace CSGameUtils
