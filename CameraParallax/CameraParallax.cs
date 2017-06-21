@@ -102,8 +102,9 @@ namespace CSGameUtils
 		/// <param name="elem">The element to be set.</param>
 		void SetStartingElementPos(ParallaxElement elem)
 		{
-			// TODO: this inst working as planned. The offset is being inversed somehow..
-			Vector3 mvmDist = GameObject.FindGameObjectWithTag("PlayerStartingPos").transform.position - GameObject.FindGameObjectWithTag("Player").transform.position;
+			// TODO: review this.
+			Vector3 startingPlayerPos = CheckpointHandler.CurrChkGO().transform.position;
+			Vector3 mvmDist = startingPlayerPos - GameObject.FindGameObjectWithTag("Player").transform.position;
 
 			if (!elem.reverseX) {
 				mvmDist.x *= -1;
