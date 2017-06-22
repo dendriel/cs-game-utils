@@ -33,7 +33,7 @@ namespace CSGameUtils
 	/// 
 	/// WARNING: must have a circle collider! There is no room in the RequireComponent statement.
 	/// </summary>
-	[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(CircleCollider2D))]
+	[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(Animator))]
 	public class SDCharacterDriver : MonoBehaviour, ICharacterDriver
 	{
 		/// <summary>
@@ -57,7 +57,7 @@ namespace CSGameUtils
 		/// WARNING: It's necessary to setup a Physics 2D Material for this collider (because it uses friction to keep
 		/// the character from moving when standing on an inclination).
 		/// </summary>
-		protected CircleCollider2D groundColl2D;
+		protected Collider2D groundColl2D;
 
 		/// <summary>
 		/// Character sprite is facing right? Set this parameter when creating the character prefab.
@@ -234,10 +234,17 @@ namespace CSGameUtils
 		{
 			rb2D = GetComponent<Rigidbody2D>();
 			coll2D = GetComponent<BoxCollider2D>();
-			groundColl2D = GetComponent<CircleCollider2D>();
 			anim = GetComponent<Animator>();
-			Assert.IsNotNull<Animator>(anim, "The character must have an animator!");
-		
+
+			Collider2D[] collsList = GetComponents<Collider2D>();
+
+			// Find the ground collider (the one that is not a trigger.
+			foreach (Collider2D coll in collsList) {
+				if (!coll.isTrigger) {
+					groundColl2D = coll;
+				}
+			}
+
 			DefaultGravity = rb2D.gravityScale;
 
 			CalculateRaySpacing();
