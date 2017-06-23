@@ -53,6 +53,11 @@ namespace CSGameUtils
 		LayerMask targetLayer;
 
 		/// <summary>
+		/// Use a circle as the testing area.
+		/// </summary>
+		float radius;
+
+		/// <summary>
 		/// Create a new IsTargetInRangeConditional.
 		/// </summary>
 		/// <param name="_charDriver">The character driver from the onwer of this action.</param>
@@ -79,6 +84,25 @@ namespace CSGameUtils
 			charDriver = _charDriver;
 			targetLayer = _targetLayer;
 			range = _range;
+			radius = 0;
+			offset = _offset;
+			_Bool = IsTargetInRangeTest;
+		}
+
+
+		/// <summary>
+		/// Create a new IsTargetInRangeConditional.
+		/// </summary>
+		/// <param name="_charDriver">The character driver from the onwer of this action.</param>
+		/// <param name="_targetLayer">The target layer mask (to check collisions).</param>
+		/// <param name="_radius">The range (as a circle).</param>
+		/// <param name="_offset">Add an offset to the collision box position.</param>
+		public IsTargetInRangeConditional(ICharacterDriver _charDriver, LayerMask _targetLayer, float _radius, Vector2 _offset)
+		{
+			charDriver = _charDriver;
+			targetLayer = _targetLayer;
+			radius = _radius;
+			range = Vector2.zero;
 			offset = _offset;
 			_Bool = IsTargetInRangeTest;
 		}
@@ -89,15 +113,24 @@ namespace CSGameUtils
 			bool isFacingRight = charDriver.IsFacingRight();
 			Vector2 center = ((isFacingRight) ? raycastOrigins.rightCenter : raycastOrigins.leftCenter);
 
-			// Align the box to one of the sides.
-			center.x += (range.x / 2) * ((isFacingRight) ? 1 : -1);
-
 			// Add the offset.
 			center.x += offset.x * ((isFacingRight) ? 1 : -1);
 			center.y += offset.y;
 
-			// Check if the target is inside range.
-			RaycastHit2D hit = Physics2D.BoxCast(center, range, 0, ((isFacingRight) ? Vector2.right : Vector2.left), 0, targetLayer);
+			Vector2 dir = ((isFacingRight) ? Vector2.right : Vector2.left);
+
+			RaycastHit2D hit;
+			if (radius == 0) {
+				// Align the cast to one of the sides.
+				center.x += (range.x / 2) * ((isFacingRight) ? 1 : -1);
+				hit = Physics2D.BoxCast(center, range, 0, dir, 0, targetLayer);
+			} else {
+				// Align the cast to one of the sides.
+				center.x += (radius / 2) * ((isFacingRight) ? 1 : -1);
+				hit = Physics2D.CircleCast(center, radius, dir, 0, targetLayer);
+			}
+
+			Debug.Log("Hit: " + hit.transform);
 			
 			// May be necessary to check if the target is alive!
 			return (hit.transform != null);

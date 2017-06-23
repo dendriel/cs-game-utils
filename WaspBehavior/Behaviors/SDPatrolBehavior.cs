@@ -177,5 +177,21 @@ namespace CSGameUtils
 			center.x += (range.x / 2) * ((isFacingRight) ? 1 : -1);
 			Gizmos.DrawWireCube(center, new Vector3(range.x, range.y, 0));
 		}
+
+		public static void DisplayAttackAreaCircle(ICharacterDriver driver, float radius, Vector2 offset)
+		{
+			RaycastOrigins raycastOrigins = driver.GetRaycastOrigins();
+			bool isFacingRight = driver.IsFacingRight();
+
+			Vector2 center = ((isFacingRight) ? raycastOrigins.rightCenter : raycastOrigins.leftCenter);
+
+			// Add offset.
+			center.x += offset.x * ((isFacingRight) ? 1 : -1);
+			center.y += offset.y;
+
+			// Centralize.
+			center.x += (radius / 2) * ((isFacingRight) ? 1 : -1);
+			Gizmos.DrawWireSphere(center, radius);
+		}
 	}
 } // namespace CSGameUtils
