@@ -819,7 +819,7 @@ namespace CSGameUtils
 		/// <summary>
 		/// The X dimension is used to check objects ahead. The Y dimension is to check ground.
 		/// </summary>
-		Vector2 hitDist = new Vector2(0.25f, 0.8f);
+		Vector2 hitDist = new Vector2(0.25f, 0.4f);
 		// Minimum distance from the ground to be considered grounded.
 		float groundMinDist = 0.4f;
 		float verticalRaySpacing;
