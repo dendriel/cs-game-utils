@@ -156,6 +156,33 @@ namespace CSGameUtils
 		}
 
 		/// <summary>
+		/// Check if an animation event is already set.
+		/// </summary>
+		/// <param name="clip">The animation to be checked.</param>
+		/// <param name="eventName">The event name.</param>
+		/// <param name="time">(optional) Check a specific time position.</param>
+		/// <returns></returns>
+		public static bool IsEventAlreadySet(AnimationClip clip, string eventName, float time=-1)
+		{
+			// Check each event in clip.events.
+			foreach (AnimationEvent evt in clip.events) {
+				// Check event name.
+				if (evt.functionName != eventName) continue;
+				// Time must be checked?
+				if (time >= 0) {
+					// Check event time.
+					if (evt.time == time) {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
 		/// Setup an animation with animation events.
 		/// 
 		/// Motivation: I created this class because I was working in a project in which the art designer send me Unity
@@ -169,9 +196,13 @@ namespace CSGameUtils
 		{
 
 			AnimationClip clip = anim.runtimeAnimatorController.animationClips[animData.ClipIndex];
+			
 
 			for (int i = 0; i < animData.eventsList.Length; i++) {
 				CallbackData currCb = animData.eventsList[i];
+
+				// Avoid setting the same event twice.
+				if (IsEventAlreadySet(clip, currCb.CallbackName, currCb.TimeTotriggerInSec)) continue;
 
 				// Setup current callback.
 				AnimationEvent evt = new AnimationEvent();
