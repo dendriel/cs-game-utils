@@ -61,11 +61,6 @@ namespace CSGameUtils
 		protected Collider2D groundColl2D;
 
 		/// <summary>
-		/// Type of the ground collider.
-		/// </summary>
-		protected Type groundColl2DType;
-
-		/// <summary>
 		/// Character sprite is facing right? Set this parameter when creating the character prefab.
 		/// </summary>
 		[SerializeField]
