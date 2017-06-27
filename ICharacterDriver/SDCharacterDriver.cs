@@ -16,6 +16,7 @@
  *	You should have received a copy of the GNU General Public License
  *	along with Character Driver. If not, see<http://www.gnu.org/licenses/>.
  */
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -58,6 +59,11 @@ namespace CSGameUtils
 		/// the character from moving when standing on an inclination).
 		/// </summary>
 		protected Collider2D groundColl2D;
+
+		/// <summary>
+		/// Type of the ground collider.
+		/// </summary>
+		protected Type groundColl2DType;
 
 		/// <summary>
 		/// Character sprite is facing right? Set this parameter when creating the character prefab.
