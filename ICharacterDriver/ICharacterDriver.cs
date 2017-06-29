@@ -151,31 +151,31 @@ namespace CSGameUtils
 		/// Check if the character is in the idle state. Useful for AI behaviors.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		bool IsIdle();
+		bool IsIdle(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is in the walking state. Useful for AI behaviors.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		bool IsWalking();
+		bool IsWalking(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is in the running state. Useful for AI behaviors.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		bool IsRunning();
+		bool IsRunning(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is in the attacking state. Useful for AI behaviors.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		bool IsAttacking();
+		bool IsAttacking(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is in the jumping state. Useful for AI behaviors.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		bool IsJumping();
+		bool IsJumping(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is falling. Useful for AI behaviors.
@@ -187,18 +187,18 @@ namespace CSGameUtils
 		/// Check if the character is in the landing state. Useful for AI behaviors.
 		/// </summary>
 		/// <returns>true if it is landing; false otherwise.</returns>
-		bool IsLanding();
+		bool IsLanding(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is being hurt. Useful for AI behaviors.
 		/// </summary>
 		/// <returns>true if he is being hurt; false otherwise.</returns>
-		bool IsBeingHurt();
+		bool IsBeingHurt(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is dead. Useful for AI behaviors.
 		/// </summary>
 		/// <returns>true if the character is dead; false otherwise.</returns>
-		bool IsDead();
+		bool IsDead(int layerIdx = 0);
 	}
 } // namespace CSGameUtils

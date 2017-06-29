@@ -19,7 +19,7 @@ using UnityEngine;
 namespace CSGameUtils
 {
 	/// <summary>
-	/// Utilities for setting up animations.
+	/// Utilities for setting up animator and animations.
 	/// 
 	/// The main feature of this class is "SetupAnimationEvents" that enable us to setup animations from code.
 	/// </summary>
@@ -228,6 +228,18 @@ namespace CSGameUtils
 			for (int i = 0; i < animData.Length; i++) {
 				SetupAnimationEvents(anim, animData[i]);
 			}
+		}
+
+		/// <summary>
+		/// Enable a layer while disabling all other layers.
+		/// </summary>
+		public static void SetupAnimatorLayerWeight(Animator animator, int layerIdx)
+		{
+			for (int i = 0; i < animator.layerCount; i++) {
+				animator.SetLayerWeight(i, 0);
+			}
+
+			animator.SetLayerWeight(layerIdx, 1);
 		}
 	}
 } // namespace CSGameUtils

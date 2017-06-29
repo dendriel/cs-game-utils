@@ -723,31 +723,31 @@ namespace CSGameUtils
 		/// Check if the character is in the idle state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public virtual bool IsIdle() { return IsCurrentAnimationName(idleStateTag); }
+		public virtual bool IsIdle(int layerIdx = 0) { return IsCurrentAnimationName(layerIdx, idleStateTag); }
 
 		/// <summary>
 		/// Check if the character is in the walking state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public virtual bool IsWalking() { return IsCurrentAnimationName(walkStateTag, walkStartStateTag, walkEndStateTag); }
+		public virtual bool IsWalking(int layerIdx = 0) { return IsCurrentAnimationName(layerIdx, walkStateTag, walkStartStateTag, walkEndStateTag); }
 
 		/// <summary>
 		/// Check if the character is in the running state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public virtual bool IsRunning() { return IsCurrentAnimationName(runStateTag, runStartStateTag, runEndStateTag); }
+		public virtual bool IsRunning(int layerIdx = 0) { return IsCurrentAnimationName(layerIdx, runStateTag, runStartStateTag, runEndStateTag); }
 
 		/// <summary>
 		/// Check if the character is in the attacking state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public virtual bool IsAttacking() { return IsCurrentAnimationName(attackStateTag); }
+		public virtual bool IsAttacking(int layerIdx = 0) { return IsCurrentAnimationName(layerIdx, attackStateTag); }
     
 		/// <summary>
 		/// Check if the character is in the jumping state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public virtual bool IsJumping() { return IsCurrentAnimationName(jumpStateTag); }
+		public virtual bool IsJumping(int layerIdx = 0) { return IsCurrentAnimationName(layerIdx, jumpStateTag); }
 
 		/// <summary>
 		/// Check if the character is falling.
@@ -759,19 +759,19 @@ namespace CSGameUtils
 		/// Check if the character is in the landing state.
 		/// </summary>
 		/// <returns>true if it is; false otherwise.</returns>
-		public virtual bool IsLanding() { return IsCurrentAnimationName(landStateTag); }
+		public virtual bool IsLanding(int layerIdx = 0) { return IsCurrentAnimationName(layerIdx, landStateTag); }
 
 		/// <summary>
 		/// Check if the character is being hurt.
 		/// </summary>
 		/// <returns>true if he is being hurt; false otherwise.</returns>
-		public virtual bool IsBeingHurt() { return IsCurrentAnimationName(hurtStateTag); }
+		public virtual bool IsBeingHurt(int layerIdx = 0) { return IsCurrentAnimationName(layerIdx, hurtStateTag); }
 
 		/// <summary>
 		/// Check if the character is dead.
 		/// </summary>
 		/// <returns>true if the character is dead; false otherwise.</returns>
-		public virtual bool IsDead() { return IsCurrentAnimationName(deadStateTag); }
+		public virtual bool IsDead(int layerIdx = 0) { return IsCurrentAnimationName(layerIdx, deadStateTag); }
 
 
 		/// <summary>
