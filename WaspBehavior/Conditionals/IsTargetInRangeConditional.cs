@@ -130,7 +130,7 @@ namespace CSGameUtils
 				hit = Physics2D.CircleCast(center, radius, dir, 0, targetLayer);
 			}
 
-			Debug.Log("Hit: " + hit.transform);
+			//Debug.Log("Hit: " + hit.transform);
 			
 			// May be necessary to check if the target is alive!
 			return (hit.transform != null);

@@ -139,18 +139,18 @@ namespace CSGameUtils
 		public struct AnimEventsData
 		{
 			/// <summary>
-			/// Index of the animation to be configured.
+			/// Name of the animation to be configured.
 			/// </summary>
-			public int ClipIndex { get; private set; }
+			public string ClipName { get; private set; }
 
 			/// <summary>
 			/// Events to be set.
 			/// </summary>
 			public CallbackData[] eventsList { get; private set; }
 
-			public AnimEventsData(int _clipIndex, params CallbackData[] _eventsList)
+			public AnimEventsData(string _clipName, params CallbackData[] _eventsList)
 			{
-				ClipIndex = _clipIndex;
+				ClipName = _clipName;
 				eventsList = _eventsList;
 			}
 		}
@@ -194,9 +194,18 @@ namespace CSGameUtils
 		/// <param name="animData">Data from the animation to be set.</param>
 		public static void SetupAnimationEvents(Animator anim, AnimEventsData animData)
 		{
-
-			AnimationClip clip = anim.runtimeAnimatorController.animationClips[animData.ClipIndex];
+			AnimationClip clip = null;
+			for (int i = 0; i < anim.runtimeAnimatorController.animationClips.Length; i++) {
+				AnimationClip currClip = anim.runtimeAnimatorController.animationClips[i];
+				if (currClip.name.Equals(animData.ClipName)) {
+					clip = currClip;
+					break;
+				}
+			}
 			
+			if (clip == null) {
+				throw new UnityException("Could not found the given animation: " + animData.ClipName);
+			}
 
 			for (int i = 0; i < animData.eventsList.Length; i++) {
 				CallbackData currCb = animData.eventsList[i];

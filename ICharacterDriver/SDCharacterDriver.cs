@@ -106,13 +106,13 @@ namespace CSGameUtils
 		/// Walk speed.
 		/// </summary>
 		[SerializeField]
-		Vector2 walkSpeed;
+		protected Vector2 walkSpeed;
 
 		/// <summary>
 		/// Run speed.
 		/// </summary>
 		[SerializeField]
-		Vector2 runSpeed;
+		protected Vector2 runSpeed;
 
 		/// <summary>
 		/// Jump force.
@@ -227,8 +227,9 @@ namespace CSGameUtils
 		protected string walkAttachStateTag = "WalkAttach";
 		protected string walkAttachEndStateTag = "WalkAttachEnd";
 		protected string deadStateTag = "Dead";
+
 		// Layers.
-		protected const int groundLayerIdx = 0;
+		protected int currLayerIdx = 0;
 
 		// Use this for initialization
 		protected virtual void Start ()
@@ -253,13 +254,13 @@ namespace CSGameUtils
 
 		protected virtual void Update()
 		{
-			if (IsFalling() && (IsBeingHurt() == false) && (IsDead() == false)) {
+			if (IsFalling() && (IsBeingHurt(currLayerIdx) == false) && (IsDead(currLayerIdx) == false)) {
 				SetFalling();
 			} else {
 				UnsetFalling();
 			}
 
-			if (IsLanding() || IsAttacking() || IsDead()) {
+			if (IsLanding(currLayerIdx) || IsAttacking(currLayerIdx) || IsDead(currLayerIdx)) {
 				EnableFriction();
 			}
 
@@ -423,7 +424,7 @@ namespace CSGameUtils
 
 			bool grounded = IsGrounded();
         
-			if ((speed.x == WalkSpeed.x) && IsRunning()) {
+			if ((speed.x == WalkSpeed.x) && IsRunning(currLayerIdx)) {
 				anim.SetBool(runBool, false);
 			} else if (speed.x == RunSpeed.x) {
 				anim.SetBool(runBool, grounded);
@@ -458,7 +459,7 @@ namespace CSGameUtils
 		/// <returns>true if can move; false otherwise</returns>
 		public virtual bool CanMove()
 		{
-			return !(IsLanding() || IsAttacking() || IsBeingHurt() || IsDead());
+			return !(IsLanding(currLayerIdx) || IsAttacking(currLayerIdx) || IsBeingHurt(currLayerIdx) || IsDead(currLayerIdx));
 		}
 
 		/// <summary>
@@ -489,7 +490,7 @@ namespace CSGameUtils
 		public virtual void AttackA()
 		{
 			// Not grounded, landing or running can't perform attacks or is already attacking.
-			if (IsIdle() || IsWalking() || IsRunning()) {
+			if (IsIdle(currLayerIdx) || IsWalking(currLayerIdx) || IsRunning(currLayerIdx)) {
 				StopMoving();
 				anim.SetTrigger(attackATrigger);
 			}
@@ -501,7 +502,7 @@ namespace CSGameUtils
 		public virtual void AttackB()
 		{
 			// Not grounded, landing or running can't perform attacks or is already attacking.
-			if (IsIdle() || IsWalking() || IsRunning()) {
+			if (IsIdle(currLayerIdx) || IsWalking(currLayerIdx) || IsRunning(currLayerIdx)) {
 				StopMoving();
 				anim.SetTrigger(attackBTrigger);
 			}
@@ -520,26 +521,35 @@ namespace CSGameUtils
 		public virtual void Jump()
 		{
 			// Can't jump if not grounded or landing.
-			if ((IsGrounded() == false) || IsJumping() || IsLanding() || IsBeingHurt() || IsDead() || IsInsideWater) return;
+			if (!CanJump()) return;
 		
 			anim.SetTrigger(jumpTrigger);
 			EnableFriction();
 
 			// TODO: REVIEW THIS. the animator is still adding force.
-			// I believe that because the characte is still in other animation than "Jumping", the method returns
+			// I believe that because the character is still in other animation than "Jumping", the method returns
 			// without adding the jump force. So, keep calling the AddJumpForceCb() from the animation. It works and
 			// we can set the right key frame to start adding impulse.
 			//AddJumpForceCb();
 		}
 
 		/// <summary>
+		/// Checks if the character meets the conditions to jump.
+		/// </summary>
+		/// <returns>true if the character can jump; false otherwise.</returns>
+		protected virtual bool CanJump()
+		{
+			return !((IsGrounded() == false) || IsJumping(currLayerIdx) || IsLanding(currLayerIdx) || IsBeingHurt(currLayerIdx) || IsDead(currLayerIdx) || IsInsideWater);
+		}
+		
+		/// <summary>
 		/// Display the hurt animation from the character.
 		/// </summary>
 		public virtual bool TakeHit<T>(T hitProperty)
 		{
-			if (IsBeingHurt() || IsDead()) return false;
+			if (IsBeingHurt(currLayerIdx) || IsDead(currLayerIdx)) return false;
 
-			Debug.Log("Being hit!!");
+			//Debug.Log("Being hit!!");
 			anim.SetTrigger(hurtTrigger);
 			//EnableFriction();
 
@@ -553,7 +563,7 @@ namespace CSGameUtils
 		{
 			// May not be jumping anymore. (maybe started falling when preparing to jump).
 			// This condition may cause problems if the animations have some transition duration set.
-			if (!CanJump()) return;
+			if (!CanAddJumpForce()) return;
 
 			// WARNING: clearing the velocity won't work sometimes.
 			// Set vertical speed to zero or it will increase the jump length.
@@ -566,9 +576,9 @@ namespace CSGameUtils
 		/// Checks if the character is able to jump.
 		/// </summary>
 		/// <returns>true if it can jump; false otherwise.</returns>
-		protected virtual bool CanJump()
+		protected virtual bool CanAddJumpForce()
 		{
-			return IsJumping();
+			return IsJumping(currLayerIdx);
 		}
 
 		/// <summary>
