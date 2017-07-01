@@ -51,6 +51,9 @@ namespace CSGameUtils
 		public IsPointInBoxAreaConditional(Func<Vector3> _GetPoint, Vector3 _minArea, Vector3 _maxArea)
 		{
 			GetPoint = _GetPoint;
+			minArea = _minArea;
+			maxArea = _maxArea;
+
 			_Bool = IsPointInBoxAreaTest;
 		}
 
