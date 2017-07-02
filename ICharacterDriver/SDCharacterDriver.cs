@@ -254,11 +254,7 @@ namespace CSGameUtils
 
 		protected virtual void Update()
 		{
-			if (IsFalling() && (IsBeingHurt(currLayerIdx) == false) && (IsDead(currLayerIdx) == false)) {
-				SetFalling();
-			} else {
-				UnsetFalling();
-			}
+			HandleFalling();
 
 			if (IsLanding(currLayerIdx) || IsAttacking(currLayerIdx) || IsDead(currLayerIdx)) {
 				EnableFriction();
@@ -283,6 +279,18 @@ namespace CSGameUtils
 			// the character hit the ground very hard.. :D
 			} else if (MayDie && IsHittingTheGroundHard()) {
 				DeathByFalling();
+			}
+		}
+
+		/// <summary>
+		/// Set/unset the falling state as needed.
+		/// </summary>
+		protected virtual void HandleFalling()
+		{
+			if (IsFalling() && (IsBeingHurt(currLayerIdx) == false) && (IsDead(currLayerIdx) == false)) {
+				SetFalling();
+			} else {
+				UnsetFalling();
 			}
 		}
 
@@ -820,6 +828,16 @@ namespace CSGameUtils
 		{
 			return anim.GetBool(trigger);
 		}
+		
+		/// <summary>
+		/// Check if a bool is set. (same code as IsTriggerSet but duplicated to keep coherence.)
+		/// </summary>
+		/// <param name="boolParam">The bool to be checked.</param>
+		/// <returns>true if the bool is set; false otherwise.</returns>
+		protected bool IsBoolSet(string boolParam)
+		{
+			return anim.GetBool(boolParam);
+		}
 
 		/**
 		 * Code to enable us to check if the character is grounded. It's based on some Yahoo! answers, but i don't remember which one.
@@ -830,9 +848,9 @@ namespace CSGameUtils
 		/// <summary>
 		/// The X dimension is used to check objects ahead. The Y dimension is to check ground.
 		/// </summary>
-		Vector2 hitDist = new Vector2(0.25f, 0.4f);
+		protected Vector2 hitDist = new Vector2(0.25f, 0.4f);
 		// Minimum distance from the ground to be considered grounded.
-		float groundMinDist = 0.4f;
+		protected float groundMinDist = 0.4f;
 		float verticalRaySpacing;
 
 		/// <summary>
