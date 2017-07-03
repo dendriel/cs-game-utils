@@ -75,18 +75,24 @@ namespace CSGameUtils
 		T DataToReturn { get; set; }
 
 		/// <summary>
+		/// Wait for unscaled time.
+		/// </summary>
+		bool useRealTime;
+
+		/// <summary>
 		/// Initializes a new instance of the ActionTimer class.
 		/// </summary>
 		/// <param name="min">Minimum time to wait.</param>
 		/// <param name="max">Maximum time to wait.</param>
 		/// <param name="actionCb">Callback to be called when the timer finishes.</param>
 		/// <param name="data">Data to be passed to the actionCb.</param>
-		public ActionTimer(float min, float max, Action<T> actionCb, T data)
+		/// <param name="useRealTime">Use unscaled time.</param>
+		public ActionTimer(float min, float max, Action<T> actionCb, T data, bool useRealTime = false)
 		{
 			actionDoneWithParamCallback = actionCb;
 			DataToReturn = data;
 
-			DefaultConstructor(min, max);
+			DefaultConstructor(min, max, useRealTime);
 		}
 
 		/// <summary>
@@ -95,12 +101,13 @@ namespace CSGameUtils
 		/// <param name="timeToWait">Time to wait before triggering the callback.</param>
 		/// <param name="actionCb">Callback to be called when the timer finishes.</param>
 		/// <param name="data">Data to be passed to the actionCb.</param>
-		public ActionTimer(float timeToWait, Action<T> actionCb, T data)
+		/// <param name="useRealTime">Use unscaled time.</param>
+		public ActionTimer(float timeToWait, Action<T> actionCb, T data, bool useRealTime = false)
 		{
 			actionDoneWithParamCallback = actionCb;
 			DataToReturn = data;
 
-			DefaultConstructor(timeToWait, timeToWait);
+			DefaultConstructor(timeToWait, timeToWait, useRealTime);
 		}
 
 		/// <summary>
@@ -109,10 +116,11 @@ namespace CSGameUtils
 		/// <param name="min">Minimum time to wait.</param>
 		/// <param name="max">Maximum time to wait.</param>
 		/// <param name="actionCb">Callback to be called when the timer finishes (whithout parameter).</param>
-		public ActionTimer(float min, float max, Action actionCb)
+		/// <param name="useRealTime">Use unscaled time.</param>
+		public ActionTimer(float min, float max, Action actionCb, bool useRealTime = false)
 		{
 			actionDoneCallback = actionCb;
-			DefaultConstructor(min, max);
+			DefaultConstructor(min, max, useRealTime);
 		}
 
 		/// <summary>
@@ -120,10 +128,11 @@ namespace CSGameUtils
 		/// </summary>
 		/// <param name="max">Time to wait.</param>
 		/// <param name="actionCb">Callback to be called when the timer finishes (whithout parameter).</param>
-		public ActionTimer(float timeToWait, Action actionCb)
+		/// <param name="useRealTime">Use unscaled time.</param>
+		public ActionTimer(float timeToWait, Action actionCb, bool useRealTime = false)
 		{
 			actionDoneCallback = actionCb;
-			DefaultConstructor(timeToWait, timeToWait);
+			DefaultConstructor(timeToWait, timeToWait, useRealTime);
 		}
 
 		/// <summary>
@@ -131,12 +140,15 @@ namespace CSGameUtils
 		/// </summary>
 		/// <param name="min">Minimum time to wait.</param>
 		/// <param name="max">Maximum time to wait.</param>
-		void DefaultConstructor(float min, float max)
+		/// <param name="_useRealTime">Use unscaled time.</param>
+		void DefaultConstructor(float min, float max, bool _useRealTime = false)
 		{
 			minimum = min;
 			maximum = max;
 			isWaiting = false;
 			HasEnded = false;
+			useRealTime = _useRealTime;
+
 		}
 
 		/// <summary>
@@ -192,7 +204,13 @@ namespace CSGameUtils
 		IEnumerator WaitCooldown ()
 		{
 			isWaiting = true;
-			yield return new WaitForSeconds(TimeToWait());
+			
+			if (useRealTime) {
+				yield return new WaitForSecondsRealtime(TimeToWait());
+			} else {
+				yield return new WaitForSeconds(TimeToWait());
+			}
+
 			isWaiting = false;
 			HasEnded = true;
 			if (actionDoneCallback != null) {
@@ -214,7 +232,8 @@ namespace CSGameUtils
 		/// <param name="min">Minimum time to wait.</param>
 		/// <param name="max">Maximum time to wait.</param>
 		/// <param name="actionCb">Callback to be called when the timer finishes (whithout parameter).</param>
-		public ActionTimer(float timeToWait, Action actionCb) : base(timeToWait, actionCb)
+		/// <param name="useRealTime">Use unscaled time.</param>
+		public ActionTimer(float timeToWait, Action actionCb, bool useRealTime = false) : base(timeToWait, actionCb, useRealTime)
 		{ }
 	}
 } // namespace CSGameUtils
