@@ -70,12 +70,23 @@ namespace CSGameUtils
 		}
 
 		bool IsArrivedAtDestinationTest()
-		{			
-			Vector3 destn = GetDestnFunc();
+		{
+			return IsArrivedAtDestination(GetDestnFunc(), charDriver.GetPosition(), offset, checkAxis);
+		}
+
+		/// <summary>
+		/// Check if the currPos is close destn;
+		/// </summary>
+		/// <param name="destn">The destination to check.</param>
+		/// <param name="currPos">The position to check.</param>
+		/// <param name="offset">Offset to create a range "close to" the destination.</param>
+		/// <param name="checkAxis">Check the Y axis.</param>
+		/// <returns>True if arrived at the destination; false otherwise.</returns>
+		public static bool IsArrivedAtDestination(Vector3 destn, Vector3 currPos, float offset, bool checkAxis = false)
+		{
 			float minDestnBoundX = destn.x - offset;
 			float maxDestnBoundX = destn.x + offset;
-			Vector3 charPos = charDriver.GetPosition();
-			float currPosX = charPos.x;
+			float currPosX = currPos.x;
 
 			//Debug.Log("Destn: " + destn + " - arrived: " + ((currPosX >= minDestnBoundX) && (currPosX <= maxDestnBoundX)));
 
@@ -85,7 +96,7 @@ namespace CSGameUtils
 				if (checkAxis) {
 					float minDestnBoundY = destn.y - offset;
 					float maxDestnBoundY = destn.y + offset;
-					float currPosY = charPos.y;
+					float currPosY = currPos.y;
 					// Check if inside Y target. (already inside X, so return true or false depending on Y).
 					return ((currPosY >= minDestnBoundY) && (currPosY <= maxDestnBoundY));
 				} else {
