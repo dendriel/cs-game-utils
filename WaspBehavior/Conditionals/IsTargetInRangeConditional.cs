@@ -113,6 +113,26 @@ namespace CSGameUtils
 			bool isFacingRight = charDriver.IsFacingRight();
 			Vector2 center = ((isFacingRight) ? raycastOrigins.rightCenter : raycastOrigins.leftCenter);
 
+			RaycastHit2D hit = CheckObjectInArea(raycastOrigins, isFacingRight, offset, targetLayer, range, radius);
+
+			// May be necessary to check if the target is alive!
+			return (hit.transform != null);
+		}
+
+		/// <summary>
+		/// Cast a box or circle and find out if there is any object of the given layer mask in an area.
+		/// </summary>
+		/// <param name="raycastOrigins">Raycast origins (from a character driver).</param>
+		/// <param name="isFacingRight">Cast to the left of to the right of a point (character).</param>
+		/// <param name="offset">Cast offset from the origin.</param>
+		/// <param name="targetLayer">Target layer mask.</param>
+		/// <param name="range">Cast range (if a box).</param>
+		/// <param name="radius">Cast radius (if a circle).</param>
+		/// <returns>The first object hit by the cast.</returns>
+		public static RaycastHit2D CheckObjectInArea(RaycastOrigins raycastOrigins, bool isFacingRight, Vector2 offset, LayerMask targetLayer, Vector2 range, float radius = 0)
+		{
+			Vector2 center = ((isFacingRight) ? raycastOrigins.rightCenter : raycastOrigins.leftCenter);
+
 			// Add the offset.
 			center.x += offset.x * ((isFacingRight) ? 1 : -1);
 			center.y += offset.y;
@@ -130,10 +150,7 @@ namespace CSGameUtils
 				hit = Physics2D.CircleCast(center, radius, dir, 0, targetLayer);
 			}
 
-			//Debug.Log("Hit: " + hit.transform);
-			
-			// May be necessary to check if the target is alive!
-			return (hit.transform != null);
+			return hit;
 		}
 	}
 } // namespace CSGameUtils
