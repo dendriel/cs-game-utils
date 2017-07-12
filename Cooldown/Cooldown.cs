@@ -19,141 +19,155 @@ using System;
 using System.Collections;
 
 namespace CSGameUtils {
-/// <summary>
-/// Handles cooldown data. This is an independent timer that uses "WaitForSeconds" for creating a cooldown.
-///
-/// The easiest way to use this is to instantiate a new Cooldown setting the time to wait in seconds "foo = new Cooldown(1)"
-/// and triggering the cooldown passing a reference to a monobehavior "foo.Start(this)". Then wait it to end by checking
-/// "foo.IsWaiting".
-/// </summary>
-[Serializable]
-public class Cooldown
-{
 	/// <summary>
-	/// The minimum time of cooldown.
+	/// Handles cooldown data. This is an independent timer that uses "WaitForSeconds" for creating a cooldown.
+	///
+	/// The easiest way to use this is to instantiate a new Cooldown setting the time to wait in seconds "foo = new Cooldown(1)"
+	/// and triggering the cooldown passing a reference to a monobehavior "foo.Start(this)". Then wait it to end by checking
+	/// "foo.IsWaiting".
 	/// </summary>
-	[SerializeField]
-	float minimum = 1f;
-	public float Minimum { get { return minimum; } }
+	[Serializable]
+	public class Cooldown
+	{
+		/// <summary>
+		/// The minimum time of cooldown.
+		/// </summary>
+		[SerializeField]
+		float minimum = 1f;
+		public float Minimum { get { return minimum; } }
 	
-	/// <summary>
-	/// The maximum time of cooldown.
-	/// </summary>
-	[SerializeField]
-	float maximum = 2f;
-	public float Maximum { get { return maximum; } }
+		/// <summary>
+		/// The maximum time of cooldown.
+		/// </summary>
+		[SerializeField]
+		float maximum = 2f;
+		public float Maximum { get { return maximum; } }
 
-	/// <summary>
-	/// Custom time for the cooldown;
-	/// </summary>
-	float customTimeToWait = 0f;
+		/// <summary>
+		/// Custom time for the cooldown;
+		/// </summary>
+		float customTimeToWait = 0f;
 
-	/// <summary>
-	/// Tells if cooldown is in progress.
-	/// </summary>
-	bool isWaiting;
-	public bool IsWaiting { get { return isWaiting; } }
+		/// <summary>
+		/// Tells if cooldown is in progress.
+		/// </summary>
+		bool isWaiting;
+		public bool IsWaiting { get { return isWaiting; } }
 
-    /// <summary>
-    /// Tells if the cool has ended.
-    /// </summary>
-    public bool HasEnded { get; private set; }
+		/// <summary>
+		/// Tells if the cool has ended.
+		/// </summary>
+		public bool HasEnded { get; private set; }
 
-    /// <summary>
-    /// The coroutine that runs the cooldown.
-    /// </summary>
-    Coroutine cooldownCoroutine;
+		/// <summary>
+		/// The coroutine that runs the cooldown.
+		/// </summary>
+		Coroutine cooldownCoroutine;
+		
+		/// <summary>
+		/// Wait for unscaled time.
+		/// </summary>
+		bool useRealTime;
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Cooldown"/> class. Setting a "maximum" time to wait will
-	/// random the time to wait between min and max.
-	/// </summary>
-	/// <param name="min">Minimum.</param>
-	/// <param name="max">Max.</param>
-	public Cooldown(float min, float max)
-	{
-		DefaultConstructor(min, max);
-    }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cooldown"/> class. Setting a "maximum" time to wait will
+		/// random the time to wait between min and max.
+		/// </summary>
+		/// <param name="min">Minimum.</param>
+		/// <param name="max">Max.</param>
+		/// <param name="useRealTime">Use unscaled time.</param>
+		public Cooldown(float min, float max, bool useRealtime=false)
+		{
+			DefaultConstructor(min, max, useRealTime);
+		}
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Cooldown"/> class.
-	/// </summary>
-	/// <param name="delay">The time to wait.</param>
-	public Cooldown (float delay)
-	{
-		DefaultConstructor(delay, delay);
-	}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cooldown"/> class.
+		/// </summary>
+		/// <param name="delay">The time to wait.</param>
+		/// <param name="useRealTime">Use unscaled time.</param>
+		public Cooldown (float delay, bool useRealtime = false)
+		{
+			DefaultConstructor(delay, delay, useRealTime);
+		}
 
-	void DefaultConstructor(float min, float max)
-	{
-		minimum = min;
-		maximum = max;
-		isWaiting = false;
-		HasEnded = false;
-	}
+		void DefaultConstructor(float min, float max, bool _useRealtime)
+		{
+			minimum = min;
+			maximum = max;
+			isWaiting = false;
+			HasEnded = false;
+			useRealTime = _useRealtime;
+		}
 
-	/// <summary>
-	/// Calculates the cooldown value.
-	/// </summary>
-	/// <returns>The cooldown value.</returns>
-	float TimeToWait()
-	{
-		if (customTimeToWait != 0) {
-			float temp = customTimeToWait;
-            customTimeToWait = 0f;
-			return temp;
-        }
+		/// <summary>
+		/// Calculates the cooldown value.
+		/// </summary>
+		/// <returns>The cooldown value.</returns>
+		float TimeToWait()
+		{
+			if (customTimeToWait != 0) {
+				float temp = customTimeToWait;
+				customTimeToWait = 0f;
+				return temp;
+			}
 
-		if (minimum == maximum) {
-			return maximum;
-		} else {
-			return UnityEngine.Random.Range(minimum, maximum);
+			if (minimum == maximum) {
+				return maximum;
+			} else {
+				return UnityEngine.Random.Range(minimum, maximum);
+			}
+		}
+
+		/// <summary>
+		/// Starts the cooldown. Will restart if already running.
+		/// </summary>
+		/// <param name="behavior">Behavior.</param>
+		public void Start(MonoBehaviour behavior)
+		{
+			if (cooldownCoroutine != null) behavior.StopCoroutine(cooldownCoroutine);
+			cooldownCoroutine = behavior.StartCoroutine(WaitCooldown());
+			HasEnded = false;
+		}
+
+		/// <summary>
+		/// Wait a different amount of time once.
+		/// </summary>
+		/// <param name="behavior">Behavior</param>
+		/// <param name="customTime">The custom time to wait (this value is used only once).</param>
+		public void Start(MonoBehaviour behavior, float customTime)
+		{
+			customTimeToWait = customTime;
+			Start(behavior);
+		}
+
+		/// <summary>
+		/// Interrupts the cooldown.
+		/// </summary>
+		public void Stop(MonoBehaviour behavior)
+		{
+			if (cooldownCoroutine != null) behavior.StopCoroutine(cooldownCoroutine);
+			cooldownCoroutine = null;
+			isWaiting = false;
+			HasEnded = false;
+		}
+
+		/// <summary>
+		/// Waits the cooldown.
+		/// </summary>
+		/// <returns>The cooldown.</returns>
+		IEnumerator WaitCooldown()
+		{
+			isWaiting = true;
+
+			if (useRealTime) {
+				yield return new WaitForSecondsRealtime(TimeToWait());
+			} else {
+				yield return new WaitForSeconds(TimeToWait());
+			}
+
+			isWaiting = false;
+			HasEnded = true;
 		}
 	}
-
-	/// <summary>
-	/// Starts the cooldown. Will restart if already running.
-	/// </summary>
-	/// <param name="behavior">Behavior.</param>
-	public void Start(MonoBehaviour behavior)
-	{
-        if (cooldownCoroutine != null) behavior.StopCoroutine(cooldownCoroutine);
-        cooldownCoroutine = behavior.StartCoroutine(WaitCooldown());
-        HasEnded = false;
-	}
-
-	/// <summary>
-	/// Wait a different amount of time once.
-	/// </summary>
-	/// <param name="behavior">Behavior</param>
-	/// <param name="customTime">The custom time to wait (this value is used only once).</param>
-	public void Start(MonoBehaviour behavior, float customTime)
-	{
-		customTimeToWait = customTime;
-		Start(behavior);
-    }
-
-    /// <summary>
-    /// Interrupts the cooldown.
-    /// </summary>
-    public void Stop(MonoBehaviour behavior)
-    {
-        if (cooldownCoroutine != null) behavior.StopCoroutine(cooldownCoroutine);
-        cooldownCoroutine = null;
-        isWaiting = false;
-        HasEnded = false;
-    }
-
-	/// <summary>
-	/// Waits the cooldown.
-	/// </summary>
-	/// <returns>The cooldown.</returns>
-	IEnumerator WaitCooldown()
-	{
-		isWaiting = true;
-		yield return new WaitForSeconds(TimeToWait());
-		isWaiting = false;
-        HasEnded = true;
-    }
-}
 } // namespace CSGameUtils
