@@ -111,7 +111,6 @@ namespace CSGameUtils
 		{
 			RaycastOrigins raycastOrigins = charDriver.GetRaycastOrigins();
 			bool isFacingRight = charDriver.IsFacingRight();
-			Vector2 center = ((isFacingRight) ? raycastOrigins.rightCenter : raycastOrigins.leftCenter);
 
 			RaycastHit2D hit = CheckObjectInArea(raycastOrigins, isFacingRight, offset, targetLayer, range, radius);
 
