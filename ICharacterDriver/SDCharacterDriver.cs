@@ -73,14 +73,16 @@ namespace CSGameUtils
 		public Vector2 Velocity { get { return rb2D.velocity; } }
 
 		/// <summary>
-		/// Returns the character run speed.
+		/// Returns the character run speed.		/// 
+		/// We may override this method to add other factors, such as equipment speed penality.
 		/// </summary>
-		public Vector2 RunSpeed { get { return runSpeed * GravityFactor; } }
+		public virtual Vector2 RunSpeed { get { return runSpeed * GravityFactor; } }
 
 		/// <summary>
 		/// Returns the character walk speed.
+		/// we may override this method to add other factors, such as equipment speed penality.
 		/// </summary>
-		public Vector2 WalkSpeed { get { return walkSpeed * GravityFactor; } }
+		public virtual Vector2 WalkSpeed { get { return walkSpeed * GravityFactor; } }
 
 		/// <summary>
 		/// Returns the character jump force.
