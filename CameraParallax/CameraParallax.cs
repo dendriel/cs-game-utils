@@ -45,6 +45,11 @@ namespace CSGameUtils
 		[SerializeField]
 		ParallaxElement[] elements;
 
+		/// <summary>
+		/// Player GameObject tag.
+		/// </summary>
+		protected string playerTag = "Player";
+
 		Vector3 campPrevPos;
 	
 		// Use this for initialization
@@ -102,8 +107,7 @@ namespace CSGameUtils
 		/// <param name="elem">The element to be set.</param>
 		void SetStartingElementPos(ParallaxElement elem)
 		{
-			// TODO: review this.
-			Vector3 startingPlayerPos = CheckpointHandler.CurrChkGO().transform.position;
+			Vector3 startingPlayerPos = GetStartingPlayerPos();
 			Vector3 mvmDist = startingPlayerPos - GameObject.FindGameObjectWithTag("Player").transform.position;
 
 			if (!elem.reverseX) {
@@ -115,6 +119,15 @@ namespace CSGameUtils
 
 			Vector3 newElemPos = elem.Trans.position + (new Vector3(mvmDist.x * elem.OffsetSpeed.x, mvmDist.y * elem.OffsetSpeed.y, elem.Trans.position.z));        
 			elem.Trans.position = newElemPos;
+		}
+
+		/// <summary>
+		/// Retrieve the player's starting position.
+		/// </summary>
+		/// <returns>The player's starting position.</returns>
+		protected virtual Vector3 GetStartingPlayerPos()
+		{
+			return GameObject.FindGameObjectWithTag(playerTag).transform.position;
 		}
 	}
 } // namespace CSGameUtils

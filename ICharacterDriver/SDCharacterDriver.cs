@@ -862,7 +862,7 @@ namespace CSGameUtils
 		/// </summary>
 		public RaycastOrigins raycastOrigins;
 		
-		void DisplayGizmos()
+		protected virtual void DisplayGizmos()
 		{
 			//return;
 			// Bottom gizmos.
