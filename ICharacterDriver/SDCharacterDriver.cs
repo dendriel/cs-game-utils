@@ -16,7 +16,6 @@
  *	You should have received a copy of the GNU General Public License
  *	along with Character Driver. If not, see<http://www.gnu.org/licenses/>.
  */
-using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -864,7 +863,6 @@ namespace CSGameUtils
 		
 		protected virtual void DisplayGizmos()
 		{
-			//return;
 			// Bottom gizmos.
 			for (int i = 0; i < verticalRayCount; i++) {
 				Debug.DrawRay(raycastOrigins.bottomLeft + Vector2.right * verticalRaySpacing * i, new Vector2(0, hitDist.y * -1), Color.red);
@@ -922,6 +920,16 @@ namespace CSGameUtils
 			verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
         
 			verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
+		}
+
+		/// <summary>
+		/// Hit something. Check ICharacterDriver for more info about this method.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="something"></param>
+		public virtual void HitSomething<T>(T something)
+		{
+			// skip.
 		}
 	}
 } // namespace CSGameUtils

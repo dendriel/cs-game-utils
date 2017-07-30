@@ -118,6 +118,15 @@ namespace CSGameUtils
 		bool TakeHit<T>(T hitProperty);
 
 		/// <summary>
+		/// Tells the character that it hit something (while attacking or anything else).
+		/// 
+		/// When the "hit" is triggered by the animation, the character driver doesn't keep track of it. So
+		/// this method may be used by the hit script to tell the character that it hit something with the attack.
+		/// For example, this call may be used to decrease the weapon durability.
+		/// </summary>
+		void HitSomething<T>(T something);
+
+		/// <summary>
 		/// Get the characters position.
 		/// </summary>
 		/// <returns>transform.position</returns>
