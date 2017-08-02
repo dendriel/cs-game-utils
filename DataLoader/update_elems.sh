@@ -3,18 +3,18 @@
  #
  #	This file is part of Data Loader.
  #	
- #	Update Elements is free software: you can redistribute it and/or modify
+ #	Data Loader is free software: you can redistribute it and/or modify
  #	it under the terms of the GNU General Public License as published by
  #	the Free Software Foundation, either version 3 of the License, or
  #	(at your option) any later version.
  #
- #	Update Elements is distributed in the hope that it will be useful,
+ #	Data Loader is distributed in the hope that it will be useful,
  #	but WITHOUT ANY WARRANTY; without even the implied warranty of
  #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
  #	GNU General Public License for more details.
  #
  #	You should have received a copy of the GNU General Public License
- #	along with Update Elements. If not, see<http://www.gnu.org/licenses/>.
+ #	along with Data Loader. If not, see<http://www.gnu.org/licenses/>.
 ###
 
 # For the folder where this script is located:
