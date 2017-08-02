@@ -146,6 +146,8 @@ public class Camera2DFollowMany : MonoBehaviour
 	/// <param name="posLower"></param>
 	void UpdateCameraSize(Vector3 posHigher, Vector3 posLower)
 	{
+		if (!ExpandCameraX && !ExpandCameraY) return;
+
 		Vector3 distance = posHigher - posLower;
 		float expandRate = 0;
 		
