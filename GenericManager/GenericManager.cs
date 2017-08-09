@@ -112,10 +112,7 @@ namespace CSGameUtils
 		{
 			Assert.IsNotNull<GameObject>(elemPrefab, "Manager prefab was not initialized!");
 			Assert.IsNotNull<GameObject>(elemHolder, "Elements holder was not initialized!");
-
-			//elemPrefab.transform.position = new Vector3(px, py);
-			//NetworkServer.Spawn(elemPrefab);
-
+			
 			GameObject newElemGO = Instantiate(elemPrefab, new Vector3(px, py), Quaternion.identity);
 			newElemGO.transform.parent = elemHolder.transform;
 			inGameElems.Add(newElemGO);
