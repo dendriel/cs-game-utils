@@ -76,7 +76,12 @@ namespace CSGameUtils
 
 		protected abstract void BuildBehavior();
 
-
+		/// <summary>
+		/// Callback to be called from a SendMessage() event. Command: "SetEnabledCmd"
+		/// 
+		/// Will work only if EnabeldBtCmd is set as true.
+		/// </summary>
+		/// <param name="enabled">"true" - enable; "false" - disable.</param>
 		public virtual void SetEnabledCmd(string enabled)
 		{
 			if (EnabledByCmd) {
