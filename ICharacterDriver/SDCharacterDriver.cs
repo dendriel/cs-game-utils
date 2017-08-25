@@ -432,10 +432,15 @@ namespace CSGameUtils
 			if (!CanMove()) return;
 
 			bool grounded = IsGrounded();
-        
-			if ((speed.x == WalkSpeed.x) && IsRunning(currLayerIdx)) {
+
+			anim.SetBool(walkBool, grounded);
+
+			if (speed.x <= WalkSpeed.x) {
 				anim.SetBool(runBool, false);
-			} else if (speed.x == RunSpeed.x) {
+				anim.SetBool(walkBool, grounded);
+
+			} else {
+				anim.SetBool(walkBool, false);
 				anim.SetBool(runBool, grounded);
 			}								
 
@@ -458,7 +463,6 @@ namespace CSGameUtils
 				rb2D.velocity = new Vector2(rb2D.velocity.x, speed.y * dir.y);
 			}
 
-			anim.SetBool(walkBool, grounded);
 			DisableFriction();
 		}
 
@@ -494,7 +498,7 @@ namespace CSGameUtils
 		}
 
 		/// <summary>
-		/// Makes the character perform an attack.
+		/// Makes the character perform an attack (A).
 		/// </summary>
 		public virtual void AttackA()
 		{
@@ -506,7 +510,7 @@ namespace CSGameUtils
 		}
 
 		/// <summary>
-		/// Makes the character perform an attack.
+		/// Makes the character perform an attack (B).
 		/// </summary>
 		public virtual void AttackB()
 		{
@@ -518,10 +522,35 @@ namespace CSGameUtils
 		}
 
 		/// <summary>
+		/// Makes the character perform an special attack (A).
+		/// </summary>
+		public virtual void SpecialAttackA()
+		{
+			AttackA();
+		}
+
+		/// <summary>
+		/// Makes the character perform an special attack (B).
+		/// </summary>
+		public virtual void SpecialAttackB()
+		{
+			AttackB();
+		}
+
+		/// <summary>
 		/// Perform an action.
 		/// </summary>
-		protected virtual void Action(float param)
+		public virtual void Action()
 		{
+			throw new UnityException("Action method is not implemented!");
+		}
+
+		/// <summary>
+		/// Performs the provoke animation.
+		/// </summary>
+		public virtual void Provoke()
+		{
+			throw new UnityException("Provoke method is not implemented!");
 		}
 
 		/// <summary>

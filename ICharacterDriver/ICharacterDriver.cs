@@ -101,6 +101,26 @@ namespace CSGameUtils
 		void AttackB();
 
 		/// <summary>
+		/// Performs the Special Attack A.
+		/// </summary>
+		void SpecialAttackA();
+
+		/// <summary>
+		/// Performs the Special Attack B.
+		/// </summary>
+		void SpecialAttackB();
+
+		/// <summary>
+		/// Performs the provoke animation.
+		/// </summary>
+		void Provoke();
+
+		/// <summary>
+		/// Performs an action. (e.g.: if the character is close to an item, pick the item).
+		/// </summary>
+		void Action();
+
+		/// <summary>
 		/// Flip the character (change its facing direction).
 		/// </summary>
 		void Flip();

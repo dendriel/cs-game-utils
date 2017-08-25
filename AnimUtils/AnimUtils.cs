@@ -214,9 +214,7 @@ namespace CSGameUtils
 				if (IsEventAlreadySet(clip, currCb.CallbackName, currCb.TimeTotriggerInSec)) continue;
 
 				// Setup current callback.
-				AnimationEvent evt = new AnimationEvent();
-				evt.time = currCb.TimeTotriggerInSec;
-				evt.functionName = currCb.CallbackName;
+				AnimationEvent evt = new AnimationEvent() { time = currCb.TimeTotriggerInSec, functionName = currCb.CallbackName };
 
 				// Setup paramters.
 				if (currCb.SetFloat) {
