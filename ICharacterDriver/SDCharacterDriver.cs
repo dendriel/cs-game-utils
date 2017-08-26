@@ -16,6 +16,7 @@
  *	You should have received a copy of the GNU General Public License
  *	along with Character Driver. If not, see<http://www.gnu.org/licenses/>.
  */
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -92,6 +93,11 @@ namespace CSGameUtils
 		/// Flag to tell if the character is inside a body of water.
 		/// </summary>
 		public bool IsInsideWater { get; set; }
+
+		/// <summary>
+		/// If player is invencible, it cannot be hurt.
+		/// </summary>
+		public bool IsInvencible { get; protected set; }
 
 		/// <summary>
 		/// Get and set the character gravity factor (0 - no factor; 1 - maximum).
@@ -536,6 +542,15 @@ namespace CSGameUtils
 		{
 			AttackB();
 		}
+		
+		/// <summary>
+		/// Set character invencibility value.
+		/// </summary>
+		/// <param name="invencible">true - character is invencible; false character is not invencible.</param>
+		public virtual void SetInvencibility(bool invencible)
+		{
+			IsInvencible = invencible;
+		}
 
 		/// <summary>
 		/// Perform an action.
@@ -585,7 +600,7 @@ namespace CSGameUtils
 		/// </summary>
 		public virtual bool TakeHit<T>(T hitProperty)
 		{
-			if (IsBeingHurt(currLayerIdx) || IsDead(currLayerIdx)) return false;
+			if (IsBeingHurt(currLayerIdx) || IsDead(currLayerIdx) || IsInvencible) return false;
 
 			//Debug.Log("Being hit!!");
 			anim.SetTrigger(hurtTrigger);
@@ -959,6 +974,16 @@ namespace CSGameUtils
 		public virtual void HitSomething<T>(T something)
 		{
 			// skip.
+		}
+
+		public virtual bool IsProvoking(int layerIdx = 0)
+		{
+			throw new NotImplementedException();
+		}
+
+		public virtual bool IsExecutingAction(int layerIdx = 0)
+		{
+			throw new NotImplementedException();
 		}
 	}
 } // namespace CSGameUtils

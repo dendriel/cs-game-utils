@@ -60,6 +60,7 @@ namespace CSGameUtils
 			public string StringParamValue { get; private set; }
 			// Flag to use this variable as callback parameter.
 			public bool SetString { get; private set; }
+			
 
 			/// <summary>
 			/// Create a new animation event callback data bundle.
@@ -88,16 +89,17 @@ namespace CSGameUtils
 			{
 				TimeTotriggerInSec = _timeTotriggerInSec;
 				CallbackName = _callbackName;
-				FloatParamValue = _floatParamValue;
-				SetFloat = true;
 				IntParamValue = -1;
 				SetInt = false;
 				StringParamValue = "";
 				SetString = false;
+
+				FloatParamValue = _floatParamValue;
+				SetFloat = true;
 			}
 
 			/// <summary>
-			/// Create a new animation event callback data bundle. The callback receives a float parameter.
+			/// Create a new animation event callback data bundle. The callback receives a int parameter.
 			/// </summary>
 			/// <param name="_callbackName">Callback to be triggered.</param>
 			/// <param name="_timeTotriggerInSec">Animation time to trigger the callback.</param>
@@ -108,14 +110,15 @@ namespace CSGameUtils
 				CallbackName = _callbackName;
 				FloatParamValue = -1;
 				SetFloat = false;
-				IntParamValue = _intParamValue;
-				SetInt = true;
 				StringParamValue = "";
 				SetString = false;
+
+				IntParamValue = _intParamValue;
+				SetInt = true;
 			}
 
 			/// <summary>
-			/// Create a new animation event callback data bundle. The callback receives a float parameter.
+			/// Create a new animation event callback data bundle. The callback receives a string parameter.
 			/// </summary>
 			/// <param name="_callbackName">Callback to be triggered.</param>
 			/// <param name="_timeTotriggerInSec">Animation time to trigger the callback.</param>
@@ -128,6 +131,7 @@ namespace CSGameUtils
 				SetFloat = false;
 				IntParamValue = -1;
 				SetInt = false;
+
 				StringParamValue = _stringParamValue;
 				SetString = true;
 			}
@@ -146,12 +150,12 @@ namespace CSGameUtils
 			/// <summary>
 			/// Events to be set.
 			/// </summary>
-			public CallbackData[] eventsList { get; private set; }
+			public CallbackData[] EventsList { get; private set; }
 
 			public AnimEventsData(string _clipName, params CallbackData[] _eventsList)
 			{
 				ClipName = _clipName;
-				eventsList = _eventsList;
+				EventsList = _eventsList;
 			}
 		}
 
@@ -207,8 +211,8 @@ namespace CSGameUtils
 				throw new UnityException("Could not found the given animation: " + animData.ClipName);
 			}
 
-			for (int i = 0; i < animData.eventsList.Length; i++) {
-				CallbackData currCb = animData.eventsList[i];
+			for (int i = 0; i < animData.EventsList.Length; i++) {
+				CallbackData currCb = animData.EventsList[i];
 
 				// Avoid setting the same event twice.
 				if (IsEventAlreadySet(clip, currCb.CallbackName, currCb.TimeTotriggerInSec)) continue;

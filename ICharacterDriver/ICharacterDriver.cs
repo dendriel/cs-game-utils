@@ -126,6 +126,12 @@ namespace CSGameUtils
 		void Flip();
 
 		/// <summary>
+		/// Set the invencibility state of this character. Useful while playing animations before a fight.
+		/// </summary>
+		/// <param name="invencible">true - set the character as invencible; false - remove invencibility.</param>
+		void SetInvencibility(bool invencible);
+
+		/// <summary>
 		/// The character is facing to the right?
 		/// </summary>
 		bool IsFacingRight();
@@ -179,55 +185,78 @@ namespace CSGameUtils
 		/// <summary>
 		/// Check if the character is in the idle state. Useful for AI behaviors.
 		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
 		/// <returns>true if it is; false otherwise.</returns>
 		bool IsIdle(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is in the walking state. Useful for AI behaviors.
 		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
 		/// <returns>true if it is; false otherwise.</returns>
 		bool IsWalking(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is in the running state. Useful for AI behaviors.
 		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
 		/// <returns>true if it is; false otherwise.</returns>
 		bool IsRunning(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is in the attacking state. Useful for AI behaviors.
 		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
 		/// <returns>true if it is; false otherwise.</returns>
 		bool IsAttacking(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is in the jumping state. Useful for AI behaviors.
 		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
 		/// <returns>true if it is; false otherwise.</returns>
 		bool IsJumping(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is falling. Useful for AI behaviors.
 		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
 		/// <returns>true if he is falling; false otherwise.</returns>
 		bool IsFalling();
 
 		/// <summary>
 		/// Check if the character is in the landing state. Useful for AI behaviors.
 		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
 		/// <returns>true if it is landing; false otherwise.</returns>
 		bool IsLanding(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is being hurt. Useful for AI behaviors.
 		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
 		/// <returns>true if he is being hurt; false otherwise.</returns>
 		bool IsBeingHurt(int layerIdx = 0);
 
 		/// <summary>
 		/// Check if the character is dead. Useful for AI behaviors.
 		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
 		/// <returns>true if the character is dead; false otherwise.</returns>
 		bool IsDead(int layerIdx = 0);
+
+		/// <summary>
+		/// Check if the character is provoking. Useful for AI behaviors.
+		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
+		/// <returns>true if the character is provoking; false otherwise.</returns>
+		bool IsProvoking(int layerIdx = 0);
+
+		/// <summary>
+		/// Check if the character is executing an action. Useful for AI behaviors.
+		/// </summary>
+		/// <param name="layerIdx">Animator layer to be checked.</param>
+		/// <returns>true if the character is executing an action; false otherwise.</returns>
+		bool IsExecutingAction(int layerIdx = 0);
 	}
 } // namespace CSGameUtils

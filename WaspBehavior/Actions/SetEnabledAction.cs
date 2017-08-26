@@ -1,6 +1,7 @@
 ﻿using BehaviorLibrary;
 using BehaviorLibrary.Components.Actions;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace CSGameUtils
 {
@@ -26,6 +27,7 @@ namespace CSGameUtils
 		/// <param name="_active">The new state of the component.</param>
 		public SetEnabledAction(MonoBehaviour _component, bool _active = true)
 		{
+			Assert.IsNotNull(_component, "Behavior to be enabled can't be null!");
 			component = _component;
 			active = _active;
 

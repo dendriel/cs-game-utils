@@ -154,7 +154,7 @@ namespace CSGameUtils
 		void OnDrawGizmosSelected()
 		{
 			// If not playing, there is no driver assigned.
-			DisplayAttackArea((charDriver == null) ? GetComponent<ICharacterDriver>() : charDriver, range, Vector2.zero);
+			DisplayAttackArea(charDriver ?? GetComponent<ICharacterDriver>(), range, Vector2.zero);
 		}
 
 		/// <summary>
