@@ -148,7 +148,7 @@ namespace CSGameUtils
 		///   #    #    |
 		///   #    #    |
 		///   G ## H ###I
-		// Expected path: A -> D -> F -> I
+		// Expected path: A -> B -> F -> I
 		// Expected path: 0 -> 1 -> 5 -> 8
 		/// </summary>
 		public static void TestC()
