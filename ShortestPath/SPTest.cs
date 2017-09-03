@@ -75,15 +75,16 @@ namespace CSGameUtils
 			nodeF.AddNeighbor(nodeC, nodeG);
 			nodeG.AddNeighbor(nodeF);
 
-			List<SPNode> nodesList = new List<SPNode>();
-
-			nodesList.Add(nodeA);
-			nodesList.Add(nodeB);
-			nodesList.Add(nodeC);
-			nodesList.Add(nodeD);
-			nodesList.Add(nodeE);
-			nodesList.Add(nodeF);
-			nodesList.Add(nodeG);
+			List<SPNode> nodesList = new List<SPNode>()
+			{
+				nodeA,
+				nodeB,
+				nodeC,
+				nodeD,
+				nodeE,
+				nodeF,
+				nodeG
+			};
 
 			SPNode[] sp = ShortestPath.FindShortestPath(0, 6, nodesList);
 			ShortestPath.DumpPath(new List<SPNode>(sp));
@@ -122,15 +123,16 @@ namespace CSGameUtils
 			nodeF.AddNeighbor(nodeC, nodeG);
 			nodeG.AddNeighbor(nodeE, nodeF);
 
-			List<SPNode> nodesList = new List<SPNode>();
-
-			nodesList.Add(nodeA);
-			nodesList.Add(nodeB);
-			nodesList.Add(nodeC);
-			nodesList.Add(nodeD);
-			nodesList.Add(nodeE);
-			nodesList.Add(nodeF);
-			nodesList.Add(nodeG);
+			List<SPNode> nodesList = new List<SPNode>()
+			{
+				nodeA,
+				nodeB,
+				nodeC,
+				nodeD,
+				nodeE,
+				nodeF,
+				nodeG
+			};
 
 			SPNode[] sp = ShortestPath.FindShortestPath(0, 6, nodesList);
 			ShortestPath.DumpPath(new List<SPNode>(sp));
@@ -173,18 +175,19 @@ namespace CSGameUtils
 			nodeH.AddNeighbor(nodeE, nodeG, nodeI);
 			nodeI.AddNeighbor(nodeF, nodeH);
 
-			List<SPNode> nodesList = new List<SPNode>();
-
-			nodesList.Add(nodeA);
-			nodesList.Add(nodeB);
-			nodesList.Add(nodeC);
-			nodesList.Add(nodeD);
-			nodesList.Add(nodeE);
-			nodesList.Add(nodeF);
-			nodesList.Add(nodeG);
-			nodesList.Add(nodeH);
-			nodesList.Add(nodeI);
-
+			List<SPNode> nodesList = new List<SPNode>()
+			{
+				nodeA,
+				nodeB,
+				nodeC,
+				nodeD,
+				nodeE,
+				nodeF,
+				nodeG,
+				nodeH,
+				nodeI
+			};
+			
 			SPNode[] sp = ShortestPath.FindShortestPath(0, 8, nodesList);
 			ShortestPath.DumpPath(new List<SPNode>(sp));
 		}
