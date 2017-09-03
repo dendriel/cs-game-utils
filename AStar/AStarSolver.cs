@@ -100,7 +100,7 @@ namespace CSGameUtils
 		}
 
 		/// <summary>
-		/// Find a solution for a maze.
+		/// Find a solution for a maze. (Template Method Design Pattern).
 		/// </summary>
 		/// <returns>An ordered list (first to last) of nodes to be visited to reach a solution;
 		/// if interrupted, returns an empty list.</returns>
@@ -158,17 +158,17 @@ namespace CSGameUtils
 		/// <summary>
 		/// Add the first node to be visited in the open list.
 		/// </summary>
-		protected virtual void InitializeOpenList()
+		void InitializeOpenList()
 		{
 			openList.Add(startingNode);
 		}
 
 		/// <summary>
-		/// Find the node with best heuristic and retrieve it from the list (will remove its reference
-		/// from the list).
+		/// Find the node with best heuristic and retrieve it from the list.
+		/// (will remove its reference from the list).
 		/// </summary>
 		/// <returns>The node with best heuristics in the list.</returns>
-		protected virtual IAStarNode FindLightestNode()
+		IAStarNode FindLightestNode()
 		{
 			IAStarNode bestNode = openList[0];
 
@@ -185,8 +185,20 @@ namespace CSGameUtils
 		}
 
 		/// <summary>
+		/// Check if the current node being tested is a in a solution state. (Primitive Operation)
+		/// </summary>
+		/// <returns>true if found a solution; false otherwise.</returns>
+		protected abstract bool HasFoundASolution();
+
+		/// <summary>
+		/// Find the valid neighbors (next states) from the current node. (Primitive Operation)
+		/// </summary>
+		/// <returns>A list of valid neighbors from the current node.</returns>
+		protected abstract IAStarNode[] FindNeighbors();
+
+		/// <summary>
 		/// Retrieve all nodes of a solution starting from the last node. Reverse the solution so earlier
-		/// nodes are in the starting positions.
+		/// nodes are in the starting positions. (Hook Operation)
 		/// </summary>
 		/// <returns>The nodes that compose the solution.</returns>
 		protected virtual IAStarNode[] BuildSolutionArray()
@@ -205,30 +217,24 @@ namespace CSGameUtils
 
 			return solution.ToArray();
 		}
-
+		
 		/// <summary>
-		/// Report progress. (useful for updating status from an interface).
+		/// Report progress. (Hook Operation)
 		/// May be kept empty.
 		/// </summary>
-		protected abstract void ReportProgress();
+		protected virtual void ReportProgress()
+		{
+			// Report any progress as needed (e.g.: update interface status).
+		}
 
 		/// <summary>
-		/// Check if the solver must be interrupted.
+		/// Check if the solver must be interrupted. (Hook Operation)
 		/// May always return false.
 		/// </summary>
 		/// <returns>true if the solver must be interrupted; false otherwise.</returns>
-		protected abstract bool IsCancelationPending();
-
-		/// <summary>
-		/// Check if the current node being tested is a in a solution state.
-		/// </summary>
-		/// <returns>true if found a solution; false otherwise.</returns>
-		protected abstract bool HasFoundASolution();
-
-		/// <summary>
-		/// Find the valid neighbors (next states) from the current node.
-		/// </summary>
-		/// <returns>A list of valid neighbors from the current node.</returns>
-		protected abstract IAStarNode[] FindNeighbors();
+		protected virtual bool IsCancelationPending()
+		{
+			return false;
+		}
 	}
 }
